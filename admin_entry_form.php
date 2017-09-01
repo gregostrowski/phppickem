@@ -44,6 +44,7 @@ if ($_POST['action'] == 'Submit') {
   }
   $cutoffDateTime = getCutoffDateTime($week);
   $firstGameTime = getFirstGameTime($week);
+  $teamList = getTeamsList();
 }
 
 include('includes/header.php');
@@ -135,6 +136,8 @@ echo "<option $sel value=\"$result[userID]\">$result[userName]</option> \n";
   <?php
     //get existing picks
   $picks = getUserPicks($week, $user->userID);
+  $survivorPicks = getSurvivorPrevPicks($user->userID);
+  $survivorPick = "";
 
   //get show picks status
   $sql = "select * from " . DB_PREFIX . "picksummary where weekNum = " . $week . " and userID = " . $user->userID . ";";
@@ -143,6 +146,7 @@ echo "<option $sel value=\"$result[userID]\">$result[userName]</option> \n";
     $row = $query->fetch_assoc();
     $showPicks = (int)$row['showPicks'];
     $tiebreaker = $row['tieBreakerPoints'];
+    $survivorPick = $row['survivor'];
   } else {
     $showPicks = 1;
     $tiebreaker="";
@@ -281,6 +285,24 @@ echo "<option $sel value=\"$result[userID]\">$result[userName]</option> \n";
     } else {
         echo '          <input type="hidden" name="tiebreaker" id="tiebreaker" value="0" />' . "\n";
     }
+
+    echo '          <div title="Tiebreaker" class="row bg-row1">'."\n";
+    echo '            <div class="col-xs-12 center">' . "\n";
+    echo '              <p>Survior Pick  <br />'."\n";
+    echo '                <select name="survivor" id="survivor">'."\n";
+    if($survivorPick == "") {
+      echo '                  <option value=""></option>'."\n";
+    }
+    foreach( $teamList as $team) {
+      if(!in_array($team, $survivorPicks) or $team == $survivorPick) {
+        echo '<option value="'.$team.'" '. ($team == $survivorPick ? "selected" : "") .'>'.$team.'</option>'."\n";
+      }
+    }
+    echo '                </select>'."\n";
+    echo '              </p>'."\n";
+    echo '            </div>'."\n";
+    echo '          </div>'."\n";
+
     echo '<input type="hidden" name="userID" value="'.$_REQUEST['user'].'">';
     echo '<p class="noprint"><input type="submit" name="action" value="Submit" /></p>' . "\n";
     if (ALWAYS_HIDE_PICKS) {
