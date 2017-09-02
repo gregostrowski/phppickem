@@ -46,7 +46,9 @@ if ($mysqli) {
 	die('Database not connected.  Please check your config file for proper installation.');
 }
 
-session_start();
+session_start([
+    'cookie_lifetime' => SESSION_LIFETIME,
+]);
 require('includes/classes/login.php');
 $login = new Login;
 

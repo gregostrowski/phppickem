@@ -63,8 +63,7 @@ include('includes/header.php');
       return confirm('You have not entered a tiebreaker score!  Do you want to submit anyway?');
     }
     if(document.getElementById('survivor').value === "") {
-    	alert('You have not entered a survivor pick');
-    	return false;
+    	return confirm('You have not entered a survivor pick');
     }
 		return true;
 	}

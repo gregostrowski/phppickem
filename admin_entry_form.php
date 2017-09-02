@@ -15,7 +15,8 @@ if ($_POST['action'] == 'Submit') {
   //update summary table
   $sql = "delete from " . DB_PREFIX . "picksummary where weekNum = " . $_POST['week'] . " and userID = " . $_POST['userID'] . ";";
   $mysqli->query($sql) or die('Error updating picks summary: ' . $mysqli->error);
-  $sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints) values (" . $_POST['week'] . ", " . $_POST['userID'] . ", " . (int)$_POST['showPicks'] . ", " . (int)$_POST['tiebreaker'] . ");";
+  $sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints) values (" . $_POST['week'] . ", " . $_POST['userID'] . ", " . (int)$_POST['showPicks'] . ", " . (int)$_POST['tiebreaker'] . ", '" . $_POST['survivor'] . ");";
+  $sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints, survivor) values (" . $_POST['week'] . ", " . $_POST['userID'] . ", " . (int)$_POST['showPicks'] . ", " . (int)$_POST['tiebreaker'] . ", '" . $_POST['survivor'] . "');";
   $mysqli->query($sql) or die('Error updating picks summary: ' . $mysqli->error);
 
   //loop through non-expire weeks and update picks (Greg edit: ignore time, admin can do anything they want)
@@ -119,6 +120,9 @@ echo "<option $sel value=\"$result[userID]\">$result[userName]</option> \n";
           }
           if (document.getElementById('tiebreaker').value == ""){
             return confirm('You have not entered a tiebreaker score!  Do you want to submit anyway?');
+          }
+          if(document.getElementById('survivor').value === "") {
+            return confirm('You have not entered a survivor pick');
           }
           return true;
         }
