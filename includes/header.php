@@ -7,7 +7,7 @@ header('X-UA-Compatible:IE=Edge,chrome=1'); //IE8 respects this but not the meta
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>NFL Pick 'Em <?php echo SEASON_YEAR; ?></title>
+	<title>Smada Pick'em</title>
 
 	<base href="<?php echo SITE_URL; ?>" />
 	<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css" />
@@ -41,7 +41,7 @@ header('X-UA-Compatible:IE=Edge,chrome=1'); //IE8 respects this but not the meta
 								<span class="icon-bar"></span>
 							</button>
 							<div id="logo" class="navbar-brand"><img src="images/logos/NFL.svg" alt="NFL Pick 'Em <?php echo SEASON_YEAR; ?>" class="img-responsive" /></div>
-							<div id="site-title" class="navbar-brand">NFL Pick 'Em <?php echo SEASON_YEAR; ?></div>
+							<div id="site-title" class="navbar-brand">Smada Pick'em</div>
 						</div>
 						<div class="navbar-collapse collapse">
 							<ul class="nav navbar-nav">
