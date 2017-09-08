@@ -210,7 +210,6 @@ if (sizeof($playerTotals) > 0) {
 		foreach($games as $game) {
 			$pick = '';
 			$pick = $playerPicks[$userID][$game['gameID']];
-			if($survivor == $game[''])
 
 			if(empty($pick)){$pick = 'no_pick';}
 			// $score = $game[$pick]['score'] ;
@@ -236,7 +235,7 @@ if (sizeof($playerTotals) > 0) {
 			// echo '		<td class="pickTD"><img src="images/helmets_small/' . $pick . 'R.gif" /></td>' . "\n";
 			echo '		<td class="pickTD">' . $pick . '</td>' . "\n";
 		}
-		if(!is_null($survivor)) {
+		if(!is_null($survivor) && $survivor != '') {
 			if($survivorPick == '***') {
 				$survivorEl = $survivorPick;
 			} else {

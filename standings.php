@@ -147,6 +147,12 @@ if (isset($weekStats)) {
 		</div>
 	</div>
 
+	<div class="col-xs-12">
+		<?php
+			echo '<iframe src="'.HEAD_TO_HEAD_URL.'" width="100%" height="500"></iframe>';
+		?>
+	</div>
+
 	<?php
 	$week = (int)$_GET['week'];
 	if (empty($week)) {
