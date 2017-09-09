@@ -6,6 +6,12 @@ function console_log( $data ){
   echo '</script>';
 }
 
+function print_r2($val){
+  echo '<pre>';
+  print_r($val);
+  echo  '</pre>';
+}
+
 // functions.php
 function getCurrentWeek() {
 	//get the current week number
@@ -137,6 +143,19 @@ function getUserPicks($week, $userID) {
 	}
 	$query->free;
 	return $picks;
+}
+
+function getUserFanatic($userID) {
+	global $mysqli;
+	$sql = "select fanatic from " . DB_PREFIX . "users u where userID = " . $userID . ";";
+	$query = $mysqli->query($sql);
+	if ($query->num_rows > 0) {
+		$row = $query->fetch_assoc();
+		return $row['fanatic'];
+	} else {
+		return null;
+	}
+	$query->free;
 }
 
 function getUserScore($week, $userID) {

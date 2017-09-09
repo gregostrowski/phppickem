@@ -4,8 +4,7 @@ require('includes/application_top.php');
 $week = (int)$_GET['week'];
 
 //load source code, depending on the current week, of the website into a variable as a string
-//$url = "http://www.nfl.com/ajax/scorestrip?season=".SEASON_YEAR."&seasonType=REG&week=".$week;
-$url = "http://www.nfl.com/ajax/scorestrip?season=".SEASON_YEAR."&seasonType=PRE&week=".$week;
+$url = "http://www.nfl.com/ajax/scorestrip?season=".SEASON_YEAR."&seasonType=REG&week=".$week;
 if ($xmlData = file_get_contents($url)) {
 	$xml = simplexml_load_string($xmlData);
 	$json = json_encode($xml);
