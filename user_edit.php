@@ -60,65 +60,67 @@ if (!empty($_POST['email'])) $email = $_POST['email'];
 ?>
 	<h1>Edit User Account Details</h1>
 	<?php if(isset($display)) echo $display; ?>
-	<div class="col-sm-6">
-		<form action="user_edit.php" method="post" name="edituser">
-			<input type="hidden" name="action" value="update">
-			<fieldset>
-				<legend style="font-weight:bold;">Enter User Details:</legend>
-				<div class="form-group">
-			    <label for="firstname">First Name</label>
-			    <input class="form-control" type="text" name="firstname" placeholder="First Name" value="<?php echo $firstname; ?>">
-			  </div>
-
-			  <div class="form-group">
-			    <label for="lastname">Last Name</label>
-			    <input class="form-control" type="text" name="lastname" placeholder="Last Name" value="<?php echo $lastname; ?>">
-			  </div>
-
-			  <div class="form-group">
-			    <label for="email">Email</label>
-			    <input class="form-control" type="text" name="email" placeholder="Email" value="<?php echo $email; ?>" size="30">
-			  </div>
-
-			  <div class="form-group">
-			    <label for="password">New Password</label>
-			    <input class="form-control" type="password" placeholder="New Password" name="password" value="">
-			  </div>
-
-			  <div class="form-group">
-			    <label for="password2">Confirm Password</label>
-			    <input class="form-control" type="password" placeholder="Confirm Password" name="password2" value="">
-			  </div>
-
-			  <div class="form-group">
-			  	<input type="submit" name="submit" value="Submit" class="btn btn-primary">
-			  </div>
-			</fieldset>
-		</form>
-	</div>
-	<div class="col-sm-6">
-		<form action="user_edit.php" method="post" name="editfanatic">
-			<input type="hidden" name="action" value="editfanatic">
-			<legend style="font-weight:bold;">&nbsp;</legend>
-			<fieldset>
-				<div class="form-group">
-			    <label>Fanatic Pick (auto select this team on entry form)</label>
-			    <div class="col-sm-8" style="padding-left:0">
-						<select name="fanatic" id="fanatic" class="form-control">
-							<?php
-								echo '<option value="none">None</option>'."\n";
-					    foreach( $teamList as $team) {
-					    	echo '<option value="'.$team.'" '. ($team == $fanaticPick ? "selected" : "") .'>'.$team.'</option>'."\n";
-					    }
-				    ?>
-				    </select>
+	<div class="row">
+		<div class="col-sm-6">
+			<form action="user_edit.php" method="post" name="edituser">
+				<input type="hidden" name="action" value="update">
+				<fieldset>
+					<legend style="font-weight:bold;">Enter User Details:</legend>
+					<div class="form-group">
+				    <label for="firstname">First Name</label>
+				    <input class="form-control" type="text" name="firstname" placeholder="First Name" value="<?php echo $firstname; ?>">
 				  </div>
-				  <div class="col-sm-4" style="padding-right: 0">
-				  	<input type="submit" name="SubmitFanatic" value="Update" class="btn btn-primary" />
+
+				  <div class="form-group">
+				    <label for="lastname">Last Name</label>
+				    <input class="form-control" type="text" name="lastname" placeholder="Last Name" value="<?php echo $lastname; ?>">
 				  </div>
-			  </div>
-		  </fieldset>
-		</form>
+
+				  <div class="form-group">
+				    <label for="email">Email</label>
+				    <input class="form-control" type="text" name="email" placeholder="Email" value="<?php echo $email; ?>" size="30">
+				  </div>
+
+				  <div class="form-group">
+				    <label for="password">New Password</label>
+				    <input class="form-control" type="password" placeholder="New Password" name="password" value="">
+				  </div>
+
+				  <div class="form-group">
+				    <label for="password2">Confirm Password</label>
+				    <input class="form-control" type="password" placeholder="Confirm Password" name="password2" value="">
+				  </div>
+
+				  <div class="form-group">
+				  	<input type="submit" name="submit" value="Submit" class="btn btn-primary">
+				  </div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="col-sm-6">
+			<form action="user_edit.php" method="post" name="editfanatic">
+				<input type="hidden" name="action" value="editfanatic">
+				<legend style="font-weight:bold;">&nbsp;</legend>
+				<fieldset>
+					<div class="form-group">
+				    <label>Fanatic Pick (auto select this team on entry form)</label>
+				    <div class="col-xs-8" style="padding-left:0">
+							<select name="fanatic" id="fanatic" class="form-control">
+								<?php
+									echo '<option value="none">None</option>'."\n";
+						    foreach( $teamList as $team) {
+						    	echo '<option value="'.$team.'" '. ($team == $fanaticPick ? "selected" : "") .'>'.$team.'</option>'."\n";
+						    }
+					    ?>
+					    </select>
+					  </div>
+					  <div class="col-xs-4" style="padding-right: 0">
+					  	<input type="submit" name="SubmitFanatic" value="Update" class="btn btn-primary" />
+					  </div>
+				  </div>
+			  </fieldset>
+			</form>
+		</div>
 	</div>
 <?php
 include('includes/footer.php');

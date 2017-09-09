@@ -81,7 +81,7 @@ include('includes/header.php');
 	  $('input[type=radio]').each(function(){
 	   //alert($(this).attr('checked'));
 	    var targetLabel = $('label[for="'+$(this).attr('id')+'"]');
-	    console.log($(this).attr('id')+': '+$(this).is(':checked'));
+	    //console.log($(this).attr('id')+': '+$(this).is(':checked'));
 	    if ($(this).is(':checked')) {
 	      //console.log(targetLabel);
 	     targetLabel.addClass('highlight');
@@ -304,7 +304,7 @@ include('includes/column_right.php');
     echo '          </div>'."\n";
 
 		//echo '<p class="noprint"><input type="checkbox" name="showPicks" id="showPicks" value="1"' . (($showPicks) ? ' checked="checked"' : '') . ' /> <label for="showPicks">Allow others to see my picks</label></p>' . "\n";
-		echo '<p class="noprint"><input type="submit" name="action" value="Submit" /></p>' . "\n";
+		echo '<p class="noprint"><input type="submit" name="action" value="Submit" class="btn btn-primary" /></p>' . "\n";
 		echo '</form>' . "\n";
 	}
 

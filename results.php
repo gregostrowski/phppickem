@@ -125,7 +125,8 @@ if ($hideMyPicks && !$weekExpired) {
 }
 ?>
 
-<div class="table-responsive">
+<div class="panel"><div class="panel-body">
+<div class="table-responsive no-margin">
 <table class="table table-striped">
 	<thead>
 		<tr><th align="left">Scores</th></tr>
@@ -164,11 +165,13 @@ if ($hideMyPicks && !$weekExpired) {
 	</tbody>
 </table>
 </div>
+</div></div>
 
 <?php
 if (sizeof($playerTotals) > 0) {
 ?>
-<div class="table-responsive">
+<div class="panel"><div class="panel-body">
+<div class="table-responsive no-margin">
 <table class="table table-striped">
 	<thead>
 		<tr><th align="left">Player</th><th colspan="<?php echo sizeof($games) -1 ; ?>">Week <?php echo $week; ?></th><th class="center">Tie Breaker</th><th>Survivor</th><th align="left">Score</th></tr>
@@ -275,6 +278,7 @@ if (sizeof($playerTotals) > 0) {
 	</tbody>
 </table>
 </div>
+</div></div>
 <?php
 	//display list of absent players
 	$sql = "select * from " . DB_PREFIX . "users where `status` = 1 and userID not in(" . implode(',', array_keys($playerTotals)) . ") and userName <> 'admin'";

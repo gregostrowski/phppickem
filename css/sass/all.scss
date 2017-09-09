@@ -1,5 +1,4 @@
 @import 'bourbon/bourbon';
-//@import 'reset';
 
 @import url('http://fonts.googleapis.com/css?family=Ubuntu');
 //@import url('http://fonts.googleapis.com/css?family=Marvel:400,400italic,700,700italic');
@@ -23,10 +22,16 @@ $font-titillium-web: 'Titillium Web', sans-serif;
 html.touch * { text-rendering: optimizeSpeed; }
 
 body {
-	background-color: #777;
 	color: #333;
 	font-family: $font-titillium-web;
 	font-size: 1.8em;
+}
+
+.no-margin {
+	margin: 0 !important;
+}
+.no-padding {
+	padding: 0 !important;
 }
 
 h1,
@@ -61,9 +66,7 @@ h3 {
 }
 h4 { font-size: 1em; }
 
-#pageContent,
-#login,
-#footer {
+#login {
 	margin: 0 auto;
 	padding: 1em;
 	background-color: #fff;
@@ -73,10 +76,7 @@ h4 { font-size: 1em; }
 	overflow: hidden;
 }
 #footer {
-	margin: 0 auto;
-	padding: 1em;
-	background-color: #fff;
-	border: 1px solid #000;
+	margin: 30px;
 }
 
 a {
@@ -108,7 +108,9 @@ abbr {
 .img-responsive {
 	max-height: 100%;
 }
-
+.navbar {
+	border-radius: 0;
+}
 .navbar-header {
 	position: relative;
 }

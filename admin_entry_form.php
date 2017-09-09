@@ -308,7 +308,7 @@ echo "<option $sel value=\"$result[userID]\">$result[userName]</option> \n";
     echo '          </div>'."\n";
 
     echo '<input type="hidden" name="userID" value="'.$_REQUEST['user'].'">';
-    echo '<p class="noprint"><input type="submit" name="action" value="Submit" /></p>' . "\n";
+    echo '<p class="noprint"><input type="submit" name="action" value="Submit" class="btn btn-primary" /></p>' . "\n";
     if (ALWAYS_HIDE_PICKS) {
       echo '<p class="noprint"><input type="hidden" name="showPicks" id="showPicks" value="0"' . (($showPicks) ? ' checked="checked"' : '') . ' /> <label for="showPicks">' . "\n";
     } else {
