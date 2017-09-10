@@ -527,3 +527,9 @@ function getTeamsList() {
 	$query->free;
 	return $teams;
 }
+
+function formatDateTimezone($date) {
+	$pacificDate = new DateTime($date, new DateTimeZone('America/New_York'));
+	$pacificDate->setTimezone(new DateTimeZone(TIMEZONE_DISPLAY));
+	return $pacificDate->format('D n/j g:i a T');
+}

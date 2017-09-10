@@ -195,7 +195,7 @@ echo "<option $sel value=\"$result[userID]\">$result[userName]</option> \n";
         echo '          <div class="col-xs-12 center"><b>Final: ' . $row['visitorScore'] . ' - ' . $row['homeScore'] . '</b></div>' . "\n";
       } else {
         //else show time of game
-        echo '          <div class="col-xs-12 center">' . date('D n/j g:i a', strtotime($row['gameTimeEastern'])) . ' ET</div>' . "\n";
+        echo '          <div class="col-xs-12 center">' . formatDateTimezone($row['gameTimeEastern']) . '</div>' . "\n";
       }
       echo '          </div>'."\n";
       echo '          <div class="row versus">' . "\n";

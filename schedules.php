@@ -82,7 +82,7 @@ if ($query->num_rows > 0) {
 			echo '		<td></td>' . "\n";
 		} else {
 			//show time
-			echo '		<td>' . date('D n/j g:i a', strtotime($row['gameTimeEastern'])) . ' ET</td>' . "\n";
+			echo '		<td>' . date('D n/j g:i a', formatDateTimezone($row['gameTimeEastern']) . '</td>' . "\n";
 		}
 		echo '	</tr>' . "\n";
 		$prevWeek = $row['weekNum'];
