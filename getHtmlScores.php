@@ -2,12 +2,18 @@
 require('includes/application_top.php');
 
 $week = (int)$_GET['week'];
+$currWeek = (int)getCurrentWeek();
 if (empty($week)) {
-  $week = (int)getCurrentWeek();
+  $week = $currWeek;
 }
 
+
 //load source code, depending on the current week, of the website into a variable as a string
-$url = "http://www.nfl.com/ajax/scorestrip?season=".SEASON_YEAR."&seasonType=REG&week=".$week;
+$url = "http://www.nfl.com/liveupdate/scorestrip/ss.xml";
+if($week != $currWeek) {
+	$url = "http://www.nfl.com/ajax/scorestrip?season=".SEASON_YEAR."&seasonType=REG&week=".$week;
+}
+
 if ($xmlData = file_get_contents($url)) {
 	$xml = simplexml_load_string($xmlData);
 	$json = json_encode($xml);

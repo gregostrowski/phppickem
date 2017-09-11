@@ -127,7 +127,7 @@ if ($hideMyPicks && !$weekExpired) {
 
 <div class="panel"><div class="panel-body">
 <div class="table-responsive no-margin">
-<table class="table table-striped">
+<table class="table table-striped no-margin">
 	<thead>
 		<tr><th align="left">Scores</th></tr>
 	</thead>
@@ -167,12 +167,31 @@ if ($hideMyPicks && !$weekExpired) {
 </div>
 </div></div>
 
+<div class="panel self-picks"><div class="panel-body">
+<div class="table-responsive no-margin">
+<table class="table table-striped no-margin">
+	<thead>
+		<tr><th align="left">Player</th><th colspan="<?php echo sizeof($games) -1 ; ?>">Week <?php echo $week; ?></th><th class="center">Tie Breaker</th><th>Survivor</th><th align="left">Score</th></tr>
+	</thead>
+	<tbody></tbody>
+</table>
+</div></div></div>
+<script>
+	$(document).ready(function () {
+		if($(".mypick").length) {
+			$(".self-picks tbody").html($(".mypick").clone());
+		} else {
+			$(".self-picks").hide();
+		}
+	});
+</script>
+
 <?php
 if (sizeof($playerTotals) > 0) {
 ?>
 <div class="panel"><div class="panel-body">
 <div class="table-responsive no-margin">
-<table class="table table-striped">
+<table class="table table-striped no-margin">
 	<thead>
 		<tr><th align="left">Player</th><th colspan="<?php echo sizeof($games) -1 ; ?>">Week <?php echo $week; ?></th><th class="center">Tie Breaker</th><th>Survivor</th><th align="left">Score</th></tr>
 	</thead>
@@ -197,18 +216,19 @@ if (sizeof($playerTotals) > 0) {
 		$tmpUser = $login->get_user_by_id($userID);
 		$rowclass = (($i % 2 == 0) ? ' class="altrow"' : '');
 		//echo '	<tr' . $rowclass . '>' . "\n";
-		echo '	<tr>' . "\n";
+		echo '	<tr '. ($userID == $user->userID ? "class='mypick'":"") .'>' . "\n";
 		switch (USER_NAMES_DISPLAY) {
 			case 1:
-				echo '		<td colspan="3">' . trim($tmpUser->firstname . ' ' . $tmpUser->lastname) . '</td></tr><tr>' . "\n";
+				echo '		<td colspan="3">' . trim($tmpUser->firstname . ' ' . $tmpUser->lastname) . '</td></tr>' . "\n";
 				break;
 			case 2:
-				echo '		<td colspan="3">' . trim($tmpUser->userName) . '</td></tr><tr>' . "\n";
+				echo '		<td colspan="3">' . trim($tmpUser->userName) . '</td></tr>' . "\n";
 				break;
 			default: //3
-				echo '		<td colspan="3"><abbr title="' . trim($tmpUser->firstname . ' ' . $tmpUser->lastname) . '">' . trim($tmpUser->userName) . '</abbr></td></tr><tr>' . "\n";
+				echo '		<td colspan="3"><abbr title="' . trim($tmpUser->firstname . ' ' . $tmpUser->lastname) . '">' . trim($tmpUser->userName) . '</abbr></td></tr>' . "\n";
 				break;
 		}
+		echo '<tr '. ($userID == $user->userID ? "class='mypick'":"") .'>' . "\n";
 		//loop through all games
 		foreach($games as $game) {
 			$pick = '';
