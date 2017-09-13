@@ -270,7 +270,7 @@ if (sizeof($playerTotals) > 0) {
 		}
 		echo '<td class="center"> '. $tieBreaker .' </td>';
 		echo '<td class="pickTD">'. $survivorEl .'</td>';
-		echo '		<td nowrap><b>' . $totalCorrect . '/' . sizeof($games) . ' (' . number_format(($totalCorrect / sizeof($games)) * 100, 2) . '%)</b></td>' . "\n";
+		echo '		<td nowrap><b>' . $totalCorrect . '/' . sizeof($games) . '</b></td>' . "\n";
 		echo '	</tr>' . "\n";
 		$i++;
 	}

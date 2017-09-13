@@ -9,10 +9,10 @@ calculateStats();
 include('includes/header.php');
 ?>
 <h1>Standings</h1>
-<h3>Weekly Stats</h3>
+<h3>Week Wins</h3>
 <div class="table-responsive">
 <table class="table table-striped">
-	<tr><th align="left">Week</th><th align="left">Winner(s)</th><th>Score</th></tr>
+	<tr><th align="left">Week</th><th align="left">Winner</th><th>Total Wins</th></tr>
 <?php
 if (isset($weekStats)) {
 	$i = 0;
@@ -35,7 +35,7 @@ if (isset($weekStats)) {
 			}
 		}
 		$rowclass = (($i % 2 == 0) ? ' class="altrow"' : '');
-		echo '	<tr' . $rowclass . '><td>' . $week . '</td><td>' . $winners . '</td><td align="center">' . $stats[highestScore] . '/' . $stats[possibleScore] . '</td></tr>';
+		echo '	<tr' . $rowclass . '><td>' . $week . '</td><td>' . $winners . '</td><td>' . $stats[highestScore] . '/' . $stats[possibleScore] . '</td></tr>';
 		$i++;
 	}
 } else {
@@ -48,43 +48,10 @@ if (isset($weekStats)) {
 <h3>User Stats</h3>
 <div class="row">
 	<div class="col-md-4 col-xs-12">
-		<b>By Name</b><br />
-		<div class="table-responsive">
-			<table class="table table-striped">
-				<tr><th align="left">Player</th><th align="left">Week Wins</th><th>Wins</th></tr>
-			<?php
-			if (isset($playerTotals)) {
-				//arsort($playerTotals);
-				$i = 0;
-				foreach($playerTotals as $playerID => $stats) {
-					$rowclass = (($i % 2 == 0) ? ' class="altrow"' : '');
-					$pickRatio = $stats[score] . '/' . $possibleScoreTotal;
-					$pickPercentage = number_format((($stats[score] / $possibleScoreTotal) * 100), 2) . '%';
-					switch (USER_NAMES_DISPLAY) {
-						case 1:
-							echo '	<tr' . $rowclass . '><td class="tiny">' . $stats[name] . '</td><td class="tiny" align="center">' . $stats[wins] . '</td><td class="tiny" align="center">' . $pickRatio . ' (' . $pickPercentage . ')</td></tr>';
-							break;
-						case 2:
-							echo '	<tr' . $rowclass . '><td class="tiny">' . $stats[userName] . '</td><td class="tiny" align="center">' . $stats[wins] . '</td><td class="tiny" align="center">' . $pickRatio . ' (' . $pickPercentage . ')</td></tr>';
-							break;
-						default: //3
-							echo '	<tr' . $rowclass . '><td class="tiny"><abbr title="' . $stats[name] . '">' . $stats[userName] . '<abbr></td><td class="tiny" align="center">' . $stats[wins] . '</td><td class="tiny" align="center">' . $pickRatio . ' (' . $pickPercentage . ')</td></tr>';
-							break;
-					}
-					$i++;
-				}
-			} else {
-				echo '	<tr><td colspan="3">No weeks have been completed yet.</td></tr>' . "\n";
-			}
-			?>
-			</table>
-		</div>
-	</div>
-	<div class="col-md-4 col-xs-12">
 		<b>By Week Wins</b><br />
 		<div class="table-responsive">
 			<table class="table table-striped">
-				<tr><th align="left">Player</th><th align="left">Week Wins</th><th>Wins</th></tr>
+				<tr><th align="left">Player</th><th align="left">Week Wins</th><th>Total Wins</th></tr>
 			<?php
 			if (isset($playerTotals)) {
 				arsort($playerTotals);
@@ -117,7 +84,7 @@ if (isset($weekStats)) {
 		<b>By Total Wins</b><br />
 		<div class="table-responsive">
 			<table class="table table-striped">
-				<tr><th align="left">Player</th><th align="left">Week Wins</th><th>Wins</th></tr>
+				<tr><th align="left">Player</th><th align="left">Week Wins</th><th>Total Wins</th></tr>
 			<?php
 			if (isset($playerTotals)) {
 				$playerTotals = sort2d($playerTotals, 'score', 'desc');
