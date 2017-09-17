@@ -1,6 +1,4 @@
 <?php
-header("Refresh: 75;url='results.php'");
-
 require('includes/application_top.php');
 
 $week = (int)$_GET['week'];
@@ -217,17 +215,23 @@ if (sizeof($playerTotals) > 0) {
 		$rowclass = (($i % 2 == 0) ? ' class="altrow"' : '');
 		//echo '	<tr' . $rowclass . '>' . "\n";
 		echo '	<tr '. ($userID == $user->userID ? "class='mypick'":"") .'>' . "\n";
+		$nameFormat = "";
 		switch (USER_NAMES_DISPLAY) {
 			case 1:
-				echo '		<td colspan="3">' . trim($tmpUser->firstname . ' ' . $tmpUser->lastname) . '</td></tr>' . "\n";
+				$nameFormat = trim($tmpUser->firstname . ' ' . $tmpUser->lastname);
 				break;
 			case 2:
-				echo '		<td colspan="3">' . trim($tmpUser->userName) . '</td></tr>' . "\n";
+				$nameFormat = trim($tmpUser->userName);
 				break;
 			default: //3
-				echo '		<td colspan="3"><abbr title="' . trim($tmpUser->firstname . ' ' . $tmpUser->lastname) . '">' . trim($tmpUser->userName) . '</abbr></td></tr>' . "\n";
+				$nameFormat = '<abbr title="' . trim($tmpUser->firstname . ' ' . $tmpUser->lastname) . '">' . trim($tmpUser->userName) . '</abbr>';
 				break;
 		}
+		$adminPickCount = "";
+		if($user->is_admin) {
+			$adminPickCount = '('. sizeof($playerPicks[$userID]) . '/'. sizeof($games) .')';
+		}
+		echo '		<td colspan="3">' . $nameFormat . ' ' . $adminPickCount . '</td></tr>' . "\n";
 		echo '<tr '. ($userID == $user->userID ? "class='mypick'":"") .'>' . "\n";
 		//loop through all games
 		foreach($games as $game) {
