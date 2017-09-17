@@ -1,6 +1,15 @@
 <?php
 header('Content-Type:text/html; charset=utf-8');
 header('X-UA-Compatible:IE=Edge,chrome=1'); //IE8 respects this but not the meta tag when under Local Intranet
+
+function auto_version($file)
+{
+  if(strpos($file, '/') !== 0 || !file_exists($_SERVER['DOCUMENT_ROOT'] . $file))
+    return $file;
+
+  $mtime = filemtime($_SERVER['DOCUMENT_ROOT'] . $file);
+  return preg_replace('{\\.([^./]+)$}', ".$mtime.\$1", $file);
+}
 ?>
 <!DOCTYPE html>
 <html xml:lang="en" lang="en">
@@ -10,8 +19,8 @@ header('X-UA-Compatible:IE=Edge,chrome=1'); //IE8 respects this but not the meta
 	<title>Smada Pick'em</title>
 
 	<base href="<?php echo SITE_URL; ?>" />
-	<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" media="all" href="css/all.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css?v=1" />
+	<link rel="stylesheet" type="text/css" media="all" href="<?php echo auto_version('css/all.css?v=2'); ?>" />
 	<link rel="stylesheet" type="text/css" media="all" href="css/custom.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="css/jquery.countdown.css" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />

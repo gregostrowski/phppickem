@@ -167,7 +167,6 @@ include('includes/column_right.php');
 		//echo '<table cellpadding="4" cellspacing="0" class="table1">' . "\n";
 		//echo '	<tr><th>Home</th><th>Visitor</th><th align="left">Game</th><th>Time / Result</th><th>Your Pick</th></tr>' . "\n";
 		echo '		<div class="row">'."\n";
-		echo '			<div class="col-xs-12">'."\n";
 		$i = 0;
 		while ($row = $query->fetch_assoc()) {
 			$scoreEntered = false;
@@ -175,9 +174,12 @@ include('includes/column_right.php');
 			$visitorTeam = new team($row['visitorID']);
 			$homeScore = (int)$row['homeScore'];
 			$visitorScore = (int)$row['visitorScore'];
-			$rowclass = (($i % 2 == 0) ? ' class="altrow"' : '');
-			echo '				<div class="matchup">' . "\n";
-			echo '					<div class="row bg-row1">'."\n";
+			$winnerID = null;
+			$visitorClass = "";
+			$homeClass = "";
+			$correctClass = "";
+			echo '<div class="col-sm-6">' . "\n";
+			echo '	<div class="matchup panel">' . "\n";
 			if (!empty($homeScore) || !empty($visitorScore)) {
 				//if score is entered, show score
 				$scoreEntered = true;
@@ -185,94 +187,50 @@ include('includes/column_right.php');
 				$visitorScore = (int)$row['visitorScore'];
 				if ($homeScore > $visitorScore) {
 					$winnerID = $row['homeID'];
+					$homeClass = "winner";
+					$visitorClass = "loser";
 				} else if ($visitorScore > $homeScore) {
 					$winnerID = $row['visitorID'];
+					$visitorClass = "winner";
+					$homeClass = "loser";
 				};
+				$correctClass = $winnerID == $picks[$row['gameID']]['pickID'] ? 'text-success' : 'text-danger';
 				//$winnerID will be null if tie, which is ok
-				echo '					<div class="col-xs-12 center"><b>Final: ' . $row['visitorScore'] . ' - ' . $row['homeScore'] . '</b></div>' . "\n";
+				echo '		<div class="panel-title title final '. $correctClass .'">Final</div>' . "\n";
 			} else {
 				//else show time of game
-				echo '					<div class="col-xs-12 center">' . formatDateTimezone($row['gameTimeEastern']) . '</div>' . "\n";
+				echo '		<div class="panel-title title">' . formatDateTimezone($row['gameTimeEastern']) . '</div>' . "\n";
 			}
-			echo '					</div>'."\n";
-			echo '					<div class="row versus">' . "\n";
-			echo '						<div class="col-xs-1"></div>' . "\n";
-			echo '						<div class="col-xs-4">'."\n";
-			echo '							<label for="' . $row['gameID'] . $visitorTeam->teamID . '" class="label-for-check"><div class="team-logo"><img src="images/logos/'.$visitorTeam->teamID.'.svg" onclick="document.entryForm.game'.$row['gameID'].'[0].checked=true;" /></div></label>' . "\n";
-			echo '						</div>'."\n";
-			echo '						<div class="col-xs-2">@</div>' . "\n";
-			echo '						<div class="col-xs-4">'."\n";
-			echo '							<label for="' . $row['gameID'] . $homeTeam->teamID . '" class="label-for-check"><div class="team-logo"><img src="images/logos/'.$homeTeam->teamID.'.svg" onclick="document.entryForm.game' . $row['gameID'] . '[1].checked=true;" /></div></label>'."\n";
-			echo '						</div>' . "\n";
-			echo '						<div class="col-xs-1"></div>' . "\n";
-			echo '					</div>' . "\n";
-			if (!$row['expired']) {
-				echo '					<div class="row bg-row2">'."\n";
-				echo '						<div class="col-xs-1"></div>' . "\n";
-				echo '						<div class="col-xs-4 center">'."\n";
-				echo '							<input type="radio" class="check-with-label" name="game' . $row['gameID'] . '" value="' . $visitorTeam->teamID . '" id="' . $row['gameID'] . $visitorTeam->teamID . '"' . (($picks[$row['gameID']]['pickID'] == $visitorTeam->teamID || ($picks[$row['gameID']]['pickID'] == '' && $fanaticPick == $visitorTeam->teamID)) ? ' checked' : '') . ' />'."\n";
-				echo '						</div>'."\n";
-				//echo '						<div class="col-xs-2 center" style="font-size: 0.8em;">&#9664; Choose &#9654;</div>' . "\n";
-				echo '						<div class="col-xs-2"></div>' . "\n";
-				echo '						<div class="col-xs-4 center">'."\n";
-				echo '							<input type="radio" class="check-with-label" name="game' . $row['gameID'] . '" value="' . $homeTeam->teamID . '" id="' . $row['gameID'] . $homeTeam->teamID . '"' . (($picks[$row['gameID']]['pickID'] == $homeTeam->teamID || ($picks[$row['gameID']]['pickID'] == '' && $fanaticPick == $homeTeam->teamID)) ? ' checked' : '') . ' />' . "\n";
-				echo '						</div>' . "\n";
-				echo '						<div class="col-xs-1"></div>' . "\n";
-				echo '					</div>' . "\n";
-			}
-			echo '					<div class="row bg-row3">'."\n";
-			echo '						<div class="col-xs-6 center">'."\n";
-			echo '							<div class="team">' . $visitorTeam->city . ' ' . $visitorTeam->team . '</div>'."\n";
+			echo '			<div class="panel-body">' . "\n";
+			// Visitor
+			echo '			<label for="' . $row['gameID'] . $visitorTeam->teamID . '" class="team label-for-check '. $visitorClass .'" >' . "\n";
+			echo '				<input class="radio-input" type="radio" name="game' . $row['gameID'] . '" value="' . $visitorTeam->teamID . '" id="' . $row['gameID'] . $visitorTeam->teamID . '"' . (($picks[$row['gameID']]['pickID'] == $visitorTeam->teamID || ($picks[$row['gameID']]['pickID'] == '' && $fanaticPick == $visitorTeam->teamID)) ? ' checked' : '') . ($row['expired'] ? " disabled" : "") . ' />'."\n";
+			echo ' 				<img src="images/logos/'.$visitorTeam->teamID.'.svg" />' . "\n";
+			echo '				<div class="details">' . "\n";
+			echo '					<div class="name">'. $visitorTeam->city . ' ' . $visitorTeam->team .'</div>' . "\n";
 			$teamRecord = trim(getTeamRecord($visitorTeam->teamID,$week));
-			if (!empty($teamRecord)) {
-				echo '							<div class="record">Record: ' . $teamRecord . '</div>'."\n";
-			}
 			$teamStreak = trim(getTeamStreak($visitorTeam->teamID,$week));
-			if (!empty($teamStreak)) {
-				echo '							<div class="streak">Streak: ' . $teamStreak . '</div>'."\n";
-			}
-			echo '						</div>'."\n";
-			echo '						<div class="col-xs-6 center">' . "\n";
-			echo '							<div class="team">' . $homeTeam->city . ' ' . $homeTeam->team . '</div>'."\n";
+			echo '					<div class="record">'.$teamRecord. ', '. $teamStreak .'</div>'. "\n";
+			echo '				</div>' . "\n";
+			echo '				<div class="score">'. (!empty($visitorScore) ? $visitorScore : "") . '</div>' . "\n";
+			echo '			</label>' . "\n";
+			// Home
+			echo '			<label for="' . $row['gameID'] . $homeTeam->teamID . '" class="team label-for-check '. $homeClass .'" >' . "\n";
+			echo '				<input class="radio-input" type="radio" name="game' . $row['gameID'] . '" value="' . $homeTeam->teamID . '" id="' . $row['gameID'] . $homeTeam->teamID . '"' . (($picks[$row['gameID']]['pickID'] == $homeTeam->teamID || ($picks[$row['gameID']]['pickID'] == '' && $fanaticPick == $homeTeam->teamID)) ? ' checked' : '') . ($row['expired'] ? " disabled" : "") . ' />'."\n";
+			echo ' 				<img src="images/logos/'.$homeTeam->teamID.'.svg" />' . "\n";
+			echo '				<div class="details">'. "\n";
+			echo '					<div class="name">'. $homeTeam->city . ' ' . $homeTeam->team .'</div>' . "\n";
 			$teamRecord = trim(getTeamRecord($homeTeam->teamID,$week));
-			if (!empty($teamRecord)) {
-				echo '							<div class="record">Record: ' . $teamRecord . '</div>'."\n";
-			}
 			$teamStreak = trim(getTeamStreak($homeTeam->teamID,$week));
-			if (!empty($teamStreak)) {
-				echo '							<div class="streak">Streak: ' . $teamStreak . '</div>'."\n";
-			}
-			echo '						</div>' . "\n";
-			echo '					</div>'."\n";
-			if ($row['expired']) {
-				//else show locked pick
-				echo '					<div class="row bg-row4">'."\n";
-				$pickID = getPickID($row['gameID'], $user->userID);
-				if (!empty($pickID)) {
-					$statusImg = '';
-					$pickTeam = new team($pickID);
-					$pickLabel = $pickTeam->teamName;
-				} else {
-					$statusImg = '<img src="images/cross_16x16.png" width="16" height="16" alt="" />';
-					$pickLabel = 'None Selected';
-				}
-				if ($scoreEntered) {
-					//set status of pick (correct, incorrect)
-					if ($pickID == $winnerID) {
-						$statusImg = '<img src="images/check_16x16.png" width="16" height="16" alt="" />';
-					} else {
-						$statusImg = '<img src="images/cross_16x16.png" width="16" height="16" alt="" />';
-					}
-				}
-				echo '						<div class="col-xs-12 center your-pick"><b>Your Pick:</b></br />';
-				echo $statusImg . ' ' . $pickLabel;
-				echo '</div>' . "\n";
-				echo '					</div>' . "\n";
-			}
-			echo '				</div>'."\n";
-			$i++;
+			echo '					<div class="record">'.$teamRecord. ', '. $teamStreak .'</div>'. "\n";
+			echo '				</div>' . "\n";
+			echo '				<div class="score">'. (!empty($homeScore) ? $homeScore : "") . '</div>' . "\n";
+			echo '			</label>' . "\n";
+			echo '		</div>' . "\n"; // panel-body
+			echo '	</div>' . "\n"; // matchup
+			echo '</div>'; //col-sm-6
+
 		}
-		echo '		</div>' . "\n";
 		echo '		</div>' . "\n";
 		if (SHOW_TIEBREAKER_POINTS) {
         echo '          <div title="Tiebreaker" class="row bg-row1">'."\n";
@@ -311,8 +269,6 @@ include('includes/column_right.php');
 echo '	</div>'."\n"; // end col
 echo '	</div>'."\n"; // end entry-form row
 
-//echo '<div id="comments" class="row">';
 include('includes/comments.php');
-//echo '</div>';
 
 include('includes/footer.php');

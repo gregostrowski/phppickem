@@ -2,4 +2,4 @@
 includes/config.php
 .DS_Store
 .sass-cache
-sass/bourbon
+bourbon

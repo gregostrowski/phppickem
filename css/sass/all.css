@@ -1,60 +1,376 @@
-/*
-Error: File to import not found or unreadable: bourbon/bourbon.
-        on line 1 of all.scss
+@import url("http://fonts.googleapis.com/css?family=Ubuntu");
+@import url("http://fonts.googleapis.com/css?family=Titillium+Web:400,400italic,700,700italic");
+* {
+  /* optimize text for legibility */
+  text-rendering: optimizeLegibility;
+  /* prevents google voice plugin from overwriting color */ }
+  * span.gc-cs-link {
+    color: inherit; }
 
-1: @import 'bourbon/bourbon';
-2: 
-3: @import url('http://fonts.googleapis.com/css?family=Ubuntu');
-4: //@import url('http://fonts.googleapis.com/css?family=Marvel:400,400italic,700,700italic');
-5: @import url('http://fonts.googleapis.com/css?family=Titillium+Web:400,400italic,700,700italic');
-6: 
+/* optimize text for speed on mobile devices */
+html.touch * {
+  text-rendering: optimizeSpeed; }
 
-Backtrace:
-all.scss:1
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/import_node.rb:67:in `rescue in import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/import_node.rb:45:in `import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/import_node.rb:28:in `imported_file'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/import_node.rb:37:in `css_import?'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:314:in `visit_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:135:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:52:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:171:in `block in visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:170:in `visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:190:in `visit_root'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:161:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:10:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/root_node.rb:36:in `css_tree'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/engine.rb:389:in `_render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/engine.rb:307:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:462:in `update_stylesheet'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:209:in `each'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:443:in `on_file_changed'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:320:in `block in watch'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/config.rb:23:in `call'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/config.rb:23:in `call'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/processor.rb:115:in `_process_changes'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/processor.rb:19:in `block in loop_for'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/processor.rb:15:in `loop'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/processor.rb:15:in `loop_for'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/loop.rb:84:in `_wait_for_changes'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/event/loop.rb:42:in `block in setup'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/internals/thread_pool.rb:6:in `call'
-/Library/Ruby/Gems/2.0.0/gems/sass-listen-4.0.0/lib/sass-listen/internals/thread_pool.rb:6:in `block in add'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: File to import not found or unreadable: bourbon/bourbon.\A         on line 1 of all.scss\A \A 1: @import 'bourbon/bourbon';\A 2: \A 3: @import url('http://fonts.googleapis.com/css?family=Ubuntu');\A 4: //@import url('http://fonts.googleapis.com/css?family=Marvel:400,400italic,700,700italic');\A 5: @import url('http://fonts.googleapis.com/css?family=Titillium+Web:400,400italic,700,700italic');\A 6: "; }
+body {
+  color: #333;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 1.8em; }
+
+.no-margin {
+  margin: 0 !important; }
+
+.no-padding {
+  padding: 0 !important; }
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0.5em 0;
+  line-height: 1.3em;
+  /* font smoothing hacks - only use for headings */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: always;
+  font-family: "Ubuntu", sans-serif; }
+
+h1 {
+  font-size: 2em;
+  font-weight: normal;
+  font-style: normal;
+  margin-top: 0; }
+
+h2 {
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1.8em; }
+
+h3 {
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1.6em; }
+
+h4 {
+  font-size: 1em; }
+
+#login {
+  margin: 0 auto;
+  padding: 1em;
+  background-color: #fff;
+  border: 1px solid #000; }
+
+#pageContent {
+  overflow: hidden; }
+
+#footer {
+  margin: 30px; }
+
+a {
+  color: #044da6;
+  text-decoration: underline; }
+  a.hover {
+    text-decoration: none; }
+  a.white {
+    color: #fff;
+    text-decoration: underline; }
+
+.nav li a {
+  text-decoration: none; }
+
+abbr {
+  border-bottom: 1px dotted #ccc; }
+
+.table-responsive {
+  overflow-x: auto;
+  margin: 1em 0;
+  border: none; }
+
+.img-responsive {
+  max-height: 100%; }
+
+.navbar {
+  border-radius: 0; }
+
+.navbar-header {
+  position: relative; }
+
+.navbar-toggle {
+  z-index: 999; }
+
+#logo {
+  margin: 5px 1em;
+  padding: 0;
+  width: 37px;
+  height: 49px; }
+
+.icon {
+  padding: 5px 1em; }
+  .icon img {
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%; }
+
+#site-title {
+  display: none; }
+
+.table th {
+  font-size: 0.9em; }
+.table td {
+  font-size: 0.8em; }
+
+td.fieldLabel {
+  font-weight: bold; }
+
+.right {
+  text-align: right; }
+
+.left {
+  text-align: left; }
+
+.center {
+  text-align: center; }
+
+.matchup .title {
+  font-size: 12px;
+  padding: 5px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+  .matchup .title.final {
+    font-weight: bold; }
+.matchup .team {
+  display: flex;
+  align-items: center;
+  position: relative;
+  font-weight: normal; }
+  .matchup .team.loser {
+    color: #aaa; }
+  .matchup .team.winner .score:after {
+    border-color: transparent #48494a transparent transparent;
+    border-style: solid;
+    border-width: 6px 6px 6px 0;
+    content: '';
+    height: 0;
+    position: absolute;
+    width: 0;
+    top: 7px;
+    right: -16px; }
+  .matchup .team img {
+    width: 40px;
+    height: 40px; }
+  .matchup .team .details {
+    margin-left: 15px; }
+    .matchup .team .details .record {
+      font-size: 12px;
+      line-height: 1; }
+    .matchup .team .details .name {
+      font-size: 16px;
+      font-weight: 500;
+      text-transform: uppercase; }
+  .matchup .team input.radio-input {
+    margin-right: 15px; }
+    .matchup .team input.radio-input:checked ~ .details .name {
+      font-weight: bold; }
+  .matchup .team .score {
+    position: absolute;
+    right: 0;
+    font-size: 20px; }
+
+.tiny {
+  font-size: 10px; }
+
+label {
+  cursor: pointer; }
+
+input[type=image] {
+  border: none; }
+
+.infoFlag {
+  cursor: pointer; }
+
+.required {
+  color: #c00;
+  font-weight: bold; }
+
+#errors {
+  margin-top: 10px;
+  padding: 6px;
+  border: 1px solid #000;
+  background-color: #eee;
+  color: #c00;
+  font-weight: bold;
+  line-height: 1.5em; }
+
+#login {
+  width: 550px;
+  font-size: 0.5em; }
+
+.col-right {
+  float: right; }
+
+.bg-primary,
+.bg-success,
+.bg-info,
+.bg-warning,
+.bg-success,
+.bg-danger {
+  padding: 1em;
+  margin: 1em 0; }
+  .bg-primary a,
+  .bg-success a,
+  .bg-info a,
+  .bg-warning a,
+  .bg-success a,
+  .bg-danger a {
+    color: #eaeaea;
+    text-decoration: none; }
+    .bg-primary a:hover,
+    .bg-success a:hover,
+    .bg-info a:hover,
+    .bg-warning a:hover,
+    .bg-success a:hover,
+    .bg-danger a:hover {
+      text-decoration: underline; }
+
+.navbar3 {
+  margin: 1em 0; }
+
+.responseError {
+  font-size: 12px;
+  padding: 15px;
+  border: 2px solid #F00;
+  background-color: #F1F1F1;
+  width: 360px; }
+
+.responseOk {
+  line-height: 18px;
+  font-size: 12px;
+  padding: 15px;
+  border: 1px solid #999;
+  background-color: #F1F1F1; }
+
+div.fieldLoaded,
+input.fieldLoaded {
+  background-color: #f0e0d0;
+  border: 1px solid #a06020;
+  padding: 2px 1px; }
+
+div.fieldLoaded {
+  padding: 0; }
+
+#warnings {
+  background: #eee;
+  border: 1px solid #000;
+  margin-bottom: 10px;
+  padding: 10px;
+  color: #c00;
+  font-weight: bold; }
+
+#donate {
+  margin: 0 auto;
+  padding: 10px 0;
+  text-align: center; }
+
+.countdown {
+  width: 100%; }
+  .countdown .countdown_row {
+    display: block;
+    text-align: center; }
+  .countdown .countdown_section {
+    display: inline-block;
+    float: none;
+    padding: 0.25em;
+    font-size: 0.9em; }
+  .countdown .countdown_descr {
+    font-weight: bold; }
+
+.check-with-label:checked + .label-for-check {
+  border: 2px solid #036; }
+
+.back2top,
+.skip2content {
+  display: none; }
+
+/* BEGIN MEDIA QUERIES*/
+@media only screen and (max-width: 991px) {
+  .nav .text {
+    display: none; } }
+@media only screen and (max-width: 767px) {
+  .nav .text {
+    display: inline; }
+
+  #site-title {
+    position: absolute;
+    display: block;
+    float: none;
+    width: 100%;
+    text-align: center;
+    padding-right: 0;
+    padding-left: 0; }
+
+  .back2top {
+    display: block;
+    margin: 1em 0;
+    text-align: right; }
+
+  .skip2content {
+    display: block; } }
+@media only screen and (max-width: 599px) {
+  .matchup {
+    font-size: 0.8em; }
+
+  .versus div {
+    height: 100px;
+    line-height: 100px; }
+  .versus .team-logo {
+    width: 100px;
+    height: 100px; } }
+@media only screen and (max-width: 399px) {
+  .versus div {
+    height: 75px;
+    line-height: 75px; }
+  .versus .team-logo {
+    width: 75px;
+    height: 75px; } }
+@media only print {
+  .navbar3,
+  .col-right,
+  #comments,
+  #footer,
+  .noprint {
+    display: none; }
+
+  a[href]:after {
+    content: ''; }
+
+  .container,
+  #pageContent {
+    border: none;
+    padding: 0; }
+
+  .table tr {
+    border: 1px solid #ccc; }
+  .table th, .table td {
+    font-size: 7pt; }
+
+  .matchup {
+    page-break-inside: avoid;
+    margin: 0.25em;
+    width: 42%;
+    display: inline-block; }
+    .matchup .bg-row1,
+    .matchup .bg-row2 {
+      padding: 0; }
+    .matchup .team,
+    .matchup .your-pick {
+      font-size: 0.6em; }
+    .matchup .record,
+    .matchup .streak {
+      display: none; }
+
+  .versus .team-logo {
+    width: 50px;
+    height: 50px; }
+  .versus div {
+    height: 44px;
+    line-height: 64px; } }
+
+/*# sourceMappingURL=all.css.map */

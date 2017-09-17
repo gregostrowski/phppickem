@@ -421,7 +421,7 @@ function getTeamRecord($teamID,$week) {
 		}
 		return $wins . '-' . $losses . '-' . $ties;
 	} else {
-		return '';
+		return '0-0-0';
 	}
 	$query->free;
 }
