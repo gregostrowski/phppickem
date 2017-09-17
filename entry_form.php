@@ -212,7 +212,7 @@ include('includes/column_right.php');
 			$teamStreak = trim(getTeamStreak($visitorTeam->teamID,$week));
 			echo '					<div class="record">'.$teamRecord. ', '. $teamStreak .'</div>'. "\n";
 			echo '				</div>' . "\n";
-			echo '				<div class="score">'. (!empty($visitorScore) ? $visitorScore : "") . '</div>' . "\n";
+			echo '				<div class="score">'. ($scoreEntered ? $visitorScore : "") . '</div>' . "\n";
 			echo '			</label>' . "\n";
 			// Home
 			echo '			<label for="' . $row['gameID'] . $homeTeam->teamID . '" class="team label-for-check '. $homeClass .'" >' . "\n";
@@ -224,7 +224,7 @@ include('includes/column_right.php');
 			$teamStreak = trim(getTeamStreak($homeTeam->teamID,$week));
 			echo '					<div class="record">'.$teamRecord. ', '. $teamStreak .'</div>'. "\n";
 			echo '				</div>' . "\n";
-			echo '				<div class="score">'. (!empty($homeScore) ? $homeScore : "") . '</div>' . "\n";
+			echo '				<div class="score">'. ($scoreEntered ? $homeScore : "") . '</div>' . "\n";
 			echo '			</label>' . "\n";
 			echo '		</div>' . "\n"; // panel-body
 			echo '	</div>' . "\n"; // matchup

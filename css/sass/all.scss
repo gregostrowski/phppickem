@@ -159,6 +159,12 @@ td.fieldLabel {
 	text-align: center;
 }
 
+.winner {
+ 	border: 1px solid #aaa;
+ 	padding: 0 2px;
+ 	background-color: #48bdf5;
+ }
+
 .matchup {
 
 	.title {
@@ -180,6 +186,10 @@ td.fieldLabel {
 	  	color: #aaa;
 	  }
 	  &.winner {
+	  	border: none;
+	  	padding: 0;
+	  	background-color: transparent;
+
 	  	.score:after {
 	  		border-color: transparent #48494a transparent transparent;
 			  border-style: solid;
@@ -224,7 +234,6 @@ td.fieldLabel {
 
 	}
 }
-
 .tiny {
 	font-size: 10px;
 }

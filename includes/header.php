@@ -20,7 +20,7 @@ function auto_version($file)
 
 	<base href="<?php echo SITE_URL; ?>" />
 	<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css?v=1" />
-	<link rel="stylesheet" type="text/css" media="all" href="<?php echo auto_version('css/all.css?v=2'); ?>" />
+	<link rel="stylesheet" type="text/css" media="all" href="<?php echo auto_version('css/all.css?v=3'); ?>" />
 	<link rel="stylesheet" type="text/css" media="all" href="css/custom.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="css/jquery.countdown.css" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
