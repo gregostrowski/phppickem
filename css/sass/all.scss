@@ -205,22 +205,39 @@ td.fieldLabel {
 	  img {
 		  width: 40px;
 		  height: 40px;
+		  @media only screen and (max-width: 399px) {
+		  	width: 35px;
+		  	height: 35px;
+		  }
 		}
 		.details {
 		  margin-left: 15px;
+		  margin-right: 20px;
 
 		  .record {
 			  font-size: 12px;
 			  line-height: 1;
+
+			  @media only screen and (max-width: 399px) {
+			  	font-size: 10px;
+			  }
 			}
 			.name {
 			  font-size: 16px;
 			  font-weight: 500;
 			  text-transform: uppercase;
+
+			  @media only screen and (max-width: 599px) {
+			  	font-size: 14px;
+			  }
+			  @media only screen and (max-width: 399px) {
+			  	font-size: 12px;
+			  }
 			}
 		}
 		input.radio-input {
 		  margin-right: 15px;
+		  margin-top: 0;
 
 		  &:checked ~ .details .name {
 		  	font-weight: bold;

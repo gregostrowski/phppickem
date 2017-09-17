@@ -231,7 +231,7 @@ if (sizeof($playerTotals) > 0) {
 		if($user->is_admin) {
 			$adminPickCount = '('. sizeof($playerPicks[$userID]) . '/'. sizeof($games) .')';
 		}
-		echo '		<td colspan="3">' . $nameFormat . ' ' . $adminPickCount . '</td></tr>' . "\n";
+		echo '		<td colspan="4">' . $nameFormat . ' ' . $adminPickCount . '</td></tr>' . "\n";
 		echo '<tr '. ($userID == $user->userID ? "class='mypick'":"") .'>' . "\n";
 		//loop through all games
 		foreach($games as $game) {
