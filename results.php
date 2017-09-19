@@ -280,24 +280,24 @@ if (sizeof($playerTotals) > 0) {
 	}
 
 	//if all scores entered, display winner
-	if ($allScoresIn) {
-		foreach($winners as $winnerID) {
-			$winner = $login->get_user_by_id($winnerID);
-			if (strlen($winnersHtml) > 0) $winnersHtml .= ', ';
-			switch (USER_NAMES_DISPLAY) {
-				case 1:
-					$winnersHtml .= trim($winner->firstname . ' ' . $winner->lastname);
-					break;
-				case 2:
-					$winnersHtml .= trim($winner->userName);
-					break;
-				default: //3
-					$winnersHtml .= '<abbr title="' . trim($winner->firstname . ' ' . $winner->lastname) . '">' . $winner->userName . '</abbr>';
-					break;
-			}
-		}
-		echo '	<tr><th colspan="' . (sizeof($games) + 2) . '" align="left">Week Winner: ' . $winnersHtml . '</th></tr>' . "\n";
-	}
+	// if ($allScoresIn) {
+	// 	foreach($winners as $winnerID) {
+	// 		$winner = $login->get_user_by_id($winnerID);
+	// 		if (strlen($winnersHtml) > 0) $winnersHtml .= ', ';
+	// 		switch (USER_NAMES_DISPLAY) {
+	// 			case 1:
+	// 				$winnersHtml .= trim($winner->firstname . ' ' . $winner->lastname);
+	// 				break;
+	// 			case 2:
+	// 				$winnersHtml .= trim($winner->userName);
+	// 				break;
+	// 			default: //3
+	// 				$winnersHtml .= '<abbr title="' . trim($winner->firstname . ' ' . $winner->lastname) . '">' . $winner->userName . '</abbr>';
+	// 				break;
+	// 		}
+	// 	}
+	// 	echo '	<tr><th colspan="' . (sizeof($games) + 2) . '" align="left">Week Winner: ' . $winnersHtml . '</th></tr>' . "\n";
+	// }
 ?>
 	</tbody>
 </table>
