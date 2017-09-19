@@ -113,7 +113,7 @@ if ($query->num_rows > 0) {
 		if ($week !== (int)$row['weekNum']) {
 			$weekNav .= '<a href="entry_form.php?week=' . $row['weekNum'] . '">' . $row['weekNum'] . '</a>';
 		} else {
-			$weekNav .= $row['weekNum'];
+			$weekNav .= '<b>'. $row['weekNum'] . '</b>';
 		}
 		$i++;
 	}
