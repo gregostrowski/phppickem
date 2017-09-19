@@ -35,7 +35,7 @@ if (isset($weekStats)) {
 			}
 		}
 		$rowclass = (($i % 2 == 0) ? ' class="altrow"' : '');
-		echo '	<tr' . $rowclass . '><td>' . $week . '</td><td>' . $winners . '</td><td>' . $stats[highestScore] . '/' . $stats[possibleScore] . '</td></tr>';
+		echo '	<tr' . $rowclass . '><td><a href="/results.php?week=' . $week . '">' . $week . '</a></td><td>' . $winners . '</td><td>' . $stats[highestScore] . '/' . $stats[possibleScore] . '</td></tr>';
 		$i++;
 	}
 } else {
