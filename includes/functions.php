@@ -16,7 +16,7 @@ function print_r2($val){
 function getCurrentWeek() {
 	//get the current week number
 	global $mysqli;
-	$sql = "select distinct weekNum from " . DB_PREFIX . "schedule where DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) < gameTimeEastern order by weekNum limit 1";
+	$sql = "select distinct weekNum from " . DB_PREFIX . "schedule where DATE_SUB(NOW(), INTERVAL 1 DAY) < gameTimeEastern order by weekNum limit 1";
 	$query = $mysqli->query($sql);
 	if ($query->num_rows > 0) {
 		$row = $query->fetch_assoc();
