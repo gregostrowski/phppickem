@@ -22,7 +22,7 @@ while ($row = $query->fetch_assoc()) {
 	if ($week !== (int)$row['weekNum']) {
 		$weekNav .= '<a href="results.php?week=' . $row['weekNum'] . '">' . $row['weekNum'] . '</a>';
 	} else {
-		$weekNav .= $row['weekNum'];
+		$weekNav .= '<b>' . $row['weekNum'] . '</b>';
 	}
 	$i++;
 }
@@ -296,7 +296,7 @@ if (sizeof($playerTotals) > 0) {
 					break;
 			}
 		}
-		echo '	<tr><th colspan="' . (sizeof($games) + 2) . '" align="left">Winner(s): ' . $winnersHtml . '</th></tr>' . "\n";
+		echo '	<tr><th colspan="' . (sizeof($games) + 2) . '" align="left">Week Winner: ' . $winnersHtml . '</th></tr>' . "\n";
 	}
 ?>
 	</tbody>
