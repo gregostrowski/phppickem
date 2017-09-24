@@ -145,8 +145,6 @@ if ($_POST['action'] == 'Send Message') {
 			} else {
 				$display = '<div class="responseOk">Message successfully sent to: ' . $addresses . '.</div><br/>';
 			}
-			//echo $subject . '<br />';
-			//echo $message;
 		}
 		//$display = '<div class="responseOk">Message successfully sent to: ' . $addresses . '.</div><br/>';
 		//header('Location: send_email.php');
