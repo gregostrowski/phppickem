@@ -259,14 +259,13 @@ function getLastCompletedWeek() {
 }
 
 function calculateStats() {
-	global $mysqli, $weekStats, $playerTotals, $possibleScoreTotal;
+	global $mysqli, $weekStats, $playerTotals, $possibleScoreTotal, $games;
 	//get latest week with all entered scores
 	$lastCompletedWeek = getLastCompletedWeek();
 
 	//loop through weeks
 	for ($week = 1; $week <= $lastCompletedWeek; $week++) {
 		//get array of games
-		$games = array();
 		$sql = "select * from " . DB_PREFIX . "schedule where weekNum = " . $week . " order by gameTimeEastern, gameID";
 		$query = $mysqli->query($sql);
 		while ($row = $query->fetch_assoc()) {

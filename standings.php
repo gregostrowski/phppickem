@@ -4,6 +4,7 @@ require('includes/application_top.php');
 $weekStats = array();
 $playerTotals = array();
 $possibleScoreTotal = 0;
+$games = array();
 calculateStats();
 
 include('includes/header.php');
@@ -113,13 +114,14 @@ if (isset($weekStats)) {
 			</table>
 		</div>
 	</div>
-
+</div>
+<div class="row">
 	<div class="col-xs-12">
 		<?php
 			echo '<iframe src="'.HEAD_TO_HEAD_URL.'" width="100%" height="500"></iframe>';
 		?>
 	</div>
-
+</div>
 	<?php
 	$week = (int)$_GET['week'];
 	if (empty($week)) {
@@ -129,6 +131,7 @@ if (isset($weekStats)) {
 
 	//get array of player picks
 	$playerPicks = array();
+
 	$sql = "select p.userID, p.weekNum, p.survivor, s.gameID ";
 	$sql .= "from " . DB_PREFIX . "picksummary p ";
 	$sql .= "inner join " . DB_PREFIX . "users u on p.userID = u.userID ";
@@ -137,18 +140,24 @@ if (isset($weekStats)) {
 	$sql .= "order by p.userID, s.gameID";
 	$query = $mysqli->query($sql);
 	$i = 0;
+	$survivorTotals = array();
 	while ($row = $query->fetch_assoc()) {
 		$playerPicks[$row['userID']][$row['weekNum']] = $row;
+		if (!empty($games[$row['gameID']]['winnerID']) && $row['survivor'] == $games[$row['gameID']]['winnerID']) {
+			//player has picked the winning team
+			$survivorTotals[$row['userID']] += 1;
+		}
 		$i++;
 	}
 	$query->free;
 
 	$sql = "select distinct weekNum from " . DB_PREFIX . "schedule order by weekNum;";
 	$query = $mysqli->query($sql);
-	?>
 
-	<!-- <h3>Survivor</h3>
+	?>
+<div class="row">
 	<div class="col-xs-12">
+		<h3>Survivor</h3>
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead>
@@ -162,14 +171,18 @@ if (isset($weekStats)) {
 					}
 					$query->free;
 					?>
-					<th>Score</th>
+					<th>Streak</th>
+					<th>Best</th>
 				</tr>
 			</thead>
 			<tbody>
 			<?php
-				foreach($playerPicks as $userID => $playerRow) {
+				arSort($survivorTotals);
+				foreach($survivorTotals as $userID => $totalCorrect) {
+					$pick = '';
 					$tmpUser = $login->get_user_by_id($userID);
 					$tmpScore = 0;
+					$bestScore = 0;
 					$weeksPlayed = 0;
 					echo '	<tr>' . "\n";
 					switch (USER_NAMES_DISPLAY) {
@@ -183,22 +196,39 @@ if (isset($weekStats)) {
 							echo '		<td><abbr title="' . trim($tmpUser->firstname . ' ' . $tmpUser->lastname) . '">' . trim($tmpUser->userName) . '</abbr></td>';
 							break;
 					}
-
+					$playerRow = $playerPicks[$userID];
 					foreach($playerRow as $weekSurvivor) {
-						echo '	<td>' . $weekSurvivor['survivor'] . '</td>';
+						$pick = '<img src="images/logos/' . $weekSurvivor['survivor'] . '.svg" / title="'.$weekSurvivor['survivor'].'" height="28" width="42">';
+
+						if (!empty($games[$weekSurvivor['gameID']]['winnerID'])) {
+							//score has been entered
+							if ($games[$weekSurvivor['gameID']]['winnerID'] == $weekSurvivor['survivor']) {
+								$pick = '<span class="winner">' . $pick . '</span>';
+								$tmpScore++;
+								if($tmpScore > $bestScore) {
+									$bestScore = $tmpScore;
+								}
+							} else {
+								$tmpScore = 0;
+							}
+						}
+
+
+						echo '	<td>' . $pick . '</td>';
 						$weeksPlayed++;
 					}
 					if($weeksPlayed != $totalWeeks) {
 						echo '<td colspan="'.($totalWeeks - $weeksPlayed).'"></td>';
 					}
-					echo '<td>'.$tmpScore.'/'.$totalWeeks.'</td>';
+					echo '<td>'.$tmpScore.'</td>';
+					echo '<td>'.$bestScore.'</td>';
 					echo '</tr>';
 				}
 			?>
 			</tbody>
 			</table>
 		</div>
-	</div> -->
+	</div>
 
 </div>
 

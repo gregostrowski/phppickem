@@ -1,6 +1,7 @@
 <?php
 $weekStats = array();
 $playerTotals = array();
+$games = array();
 $possibleScoreTotal = 0;
 calculateStats();
 

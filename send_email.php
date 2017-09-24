@@ -13,6 +13,7 @@ $firstGameTime = getFirstGameTime($week);
 
 $weekStats = array();
 $playerTotals = array();
+$games = array();
 $possibleScoreTotal = 0;
 calculateStats();
 

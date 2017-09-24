@@ -4,6 +4,7 @@ require('includes/application_top.php');
 $weekStats = array();
 $playerTotals = array();
 $possibleScoreTotal = 0;
+$games = array();
 calculateStats();
 
 include('includes/header.php');
