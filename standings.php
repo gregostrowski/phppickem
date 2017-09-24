@@ -115,13 +115,6 @@ if (isset($weekStats)) {
 		</div>
 	</div>
 </div>
-<div class="row">
-	<div class="col-xs-12">
-		<?php
-			echo '<iframe src="'.HEAD_TO_HEAD_URL.'" width="100%" height="500"></iframe>';
-		?>
-	</div>
-</div>
 	<?php
 	$week = (int)$_GET['week'];
 	if (empty($week)) {
@@ -182,8 +175,10 @@ if (isset($weekStats)) {
 					$pick = '';
 					$tmpUser = $login->get_user_by_id($userID);
 					$tmpScore = 0;
+					$origStreak = 0;
 					$bestScore = 0;
 					$weeksPlayed = 0;
+					$alive = true;
 					echo '	<tr>' . "\n";
 					switch (USER_NAMES_DISPLAY) {
 						case 1:
@@ -204,11 +199,15 @@ if (isset($weekStats)) {
 							//score has been entered
 							if ($games[$weekSurvivor['gameID']]['winnerID'] == $weekSurvivor['survivor']) {
 								$pick = '<span class="winner">' . $pick . '</span>';
+								if($alive) {
+									$origStreak++;
+								}
 								$tmpScore++;
 								if($tmpScore > $bestScore) {
 									$bestScore = $tmpScore;
 								}
 							} else {
+								$alive = false;
 								$tmpScore = 0;
 							}
 						}
@@ -220,7 +219,7 @@ if (isset($weekStats)) {
 					if($weeksPlayed != $totalWeeks) {
 						echo '<td colspan="'.($totalWeeks - $weeksPlayed).'"></td>';
 					}
-					echo '<td>'.$tmpScore.'</td>';
+					echo '<td>'.$origStreak.'</td>';
 					echo '<td>'.$bestScore.'</td>';
 					echo '</tr>';
 				}
@@ -229,7 +228,14 @@ if (isset($weekStats)) {
 			</table>
 		</div>
 	</div>
+</div>
 
+<div class="row">
+	<div class="col-xs-12">
+		<?php
+			echo '<iframe src="'.HEAD_TO_HEAD_URL.'" width="100%" height="500"></iframe>';
+		?>
+	</div>
 </div>
 
 <?php
