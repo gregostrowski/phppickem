@@ -6,6 +6,7 @@ $playerTotals = array();
 $possibleScoreTotal = 0;
 $games = array();
 calculateStats();
+$weekExpired = ((date("U", time()+(SERVER_TIMEZONE_OFFSET * 3600)) > strtotime($cutoffDateTime)) ? 1 : 0);
 
 include('includes/header.php');
 ?>
@@ -159,7 +160,7 @@ if (isset($weekStats)) {
 					<?php
 					$totalWeeks = 0;
 					while ($row = $query->fetch_assoc()) {
-						echo '<th>'.$row['weekNum'].'</th>';
+						echo '<th style="text-align:center;">'.$row['weekNum'].'</th>';
 						$totalWeeks++;
 					}
 					$query->free;
@@ -179,6 +180,7 @@ if (isset($weekStats)) {
 					$bestScore = 0;
 					$weeksPlayed = 0;
 					$alive = true;
+					$hideMyPicks = 1;
 					echo '	<tr>' . "\n";
 					switch (USER_NAMES_DISPLAY) {
 						case 1:
@@ -193,8 +195,12 @@ if (isset($weekStats)) {
 					}
 					$playerRow = $playerPicks[$userID];
 					foreach($playerRow as $weekSurvivor) {
+						$gameIsLocked = gameIsLocked($weekSurvivor['gameID']);
+						$hidePicks = hidePicks($userID, $week);
 						$pick = '<img src="images/logos/' . $weekSurvivor['survivor'] . '.svg" / title="'.$weekSurvivor['survivor'].'" height="28" width="42">';
-
+						if (!$gameIsLocked && !$weekExpired && $hidePicks && (int)$userID !== (int)$user->userID) {
+							$pick = '***';
+						}
 						if (!empty($games[$weekSurvivor['gameID']]['winnerID'])) {
 							//score has been entered
 							if ($games[$weekSurvivor['gameID']]['winnerID'] == $weekSurvivor['survivor']) {
@@ -213,7 +219,7 @@ if (isset($weekStats)) {
 						}
 
 
-						echo '	<td>' . $pick . '</td>';
+						echo '	<td align="center">' . $pick . '</td>';
 						$weeksPlayed++;
 					}
 					if($weeksPlayed != $totalWeeks) {
