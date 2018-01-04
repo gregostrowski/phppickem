@@ -227,34 +227,36 @@ echo $weekNav;
 
 		}
 		echo '		</div>' . "\n";
-		if (SHOW_TIEBREAKER_POINTS) {
-        echo '          <div title="Tiebreaker" class="row bg-row1">'."\n";
-        echo '            <div class="col-xs-12 center">' . "\n";
-        echo '              <p>Combined score in Monday night\'s game<br /><strong>'.$visitorTeam->team.' vs '. $homeTeam->team.'</strong><br />'." \n";
-        echo '              <input style="text-align:center;" type="text" name="tiebreaker" id="tiebreaker" maxlength="3" size=12 value="' . $tiebreaker . '" /> ' . " \n";
-        echo '            </div>'."\n";
-        echo '          </div>'."\n";
+		if (SHOW_TIEBREAKER_POINTS && SEASON_TYPE != 'POST') {
+			echo '          <div title="Tiebreaker" class="row bg-row1">'."\n";
+			echo '            <div class="col-xs-12 center">' . "\n";
+			echo '              <p>Combined score in Monday night\'s game<br /><strong>'.$visitorTeam->team.' vs '. $homeTeam->team.'</strong><br />'." \n";
+			echo '              <input style="text-align:center;" type="text" name="tiebreaker" id="tiebreaker" maxlength="3" size=12 value="' . $tiebreaker . '" /> ' . " \n";
+			echo '            </div>'."\n";
+			echo '          </div>'."\n";
 
-    } else {
-        echo '          <input type="hidden" name="tiebreaker" id="tiebreaker" value="0" />' . "\n";
-    }
-
-    echo '          <div title="Tiebreaker" class="row bg-row1">'."\n";
-    echo '            <div class="col-xs-12 center">' . "\n";
-    echo '						  <p>Survior Pick  <br />'."\n";
-    echo '								<select name="survivor" id="survivor">'."\n";
-    if($survivorPick == "") {
-			echo '									<option value=""></option>'."\n";
+		} else {
+			echo '          <input type="hidden" name="tiebreaker" id="tiebreaker" value="0" />' . "\n";
 		}
-    foreach( $teamList as $team) {
-      if(!in_array($team, $survivorPicks) or $team == $survivorPick) {
-    		echo '<option value="'.$team.'" '. ($team == $survivorPick ? "selected" : "") .'>'.$team.'</option>'."\n";
-    	}
-    }
-    echo '								</select>'."\n";
-    echo '							</p>'."\n";
-    echo '            </div>'."\n";
-    echo '          </div>'."\n";
+
+		if(SEASON_TYPE == 'REG') {
+			echo '          <div title="Tiebreaker" class="row bg-row1">'."\n";
+			echo '            <div class="col-xs-12 center">' . "\n";
+			echo '						  <p>Survior Pick  <br />'."\n";
+			echo '								<select name="survivor" id="survivor">'."\n";
+			if($survivorPick == "") {
+					echo '									<option value=""></option>'."\n";
+				}
+			foreach( $teamList as $team) {
+			if(!in_array($team, $survivorPicks) or $team == $survivorPick) {
+					echo '<option value="'.$team.'" '. ($team == $survivorPick ? "selected" : "") .'>'.$team.'</option>'."\n";
+				}
+			}
+			echo '								</select>'."\n";
+			echo '							</p>'."\n";
+			echo '            </div>'."\n";
+			echo '          </div>'."\n";
+		}
 
 		//echo '<p class="noprint"><input type="checkbox" name="showPicks" id="showPicks" value="1"' . (($showPicks) ? ' checked="checked"' : '') . ' /> <label for="showPicks">Allow others to see my picks</label></p>' . "\n";
 		echo '<p class="noprint"><input type="submit" name="action" value="Submit" class="btn btn-primary" /></p>' . "\n";

@@ -108,6 +108,8 @@ CREATE TABLE `nflp_schedule` (
   `visitorScore` int(11) DEFAULT NULL,
   `overtime` tinyint(1) NOT NULL DEFAULT '0',
   `final` tinyint(1) NOT NULL DEFAULT '0',
+  `type` varchar(10),
+  `year` varchar(10),
   PRIMARY KEY (`gameID`),
   KEY `GameID` (`gameID`),
   KEY `HomeID` (`homeID`),
