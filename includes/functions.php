@@ -263,6 +263,11 @@ function calculateStats() {
 	//get latest week with all entered scores
 	$lastCompletedWeek = getLastCompletedWeek();
 
+	// don't show playoffs
+	if($lastCompletedWeek > 17) {
+		$lastCompletedWeek = 17;
+	}
+
 	//loop through weeks
 	for ($week = 1; $week <= $lastCompletedWeek; $week++) {
 		//get array of games
