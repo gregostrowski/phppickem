@@ -7,9 +7,9 @@ if ($_POST['action'] == 'Submit') {
 	$cutoffDateTime = getCutoffDateTime($week);
 
 	//update summary table
-	$sql = "delete from " . DB_PREFIX . "picksummary where weekNum = " . $_POST['week'] . " and userID = " . $user->userID . ";";
+	$sql = "delete from " . DB_PREFIX . "picksummary where weekNum = " . $_POST['week'] . " and userID = " . $user->userID . " and year = " . SEASON_YEAR . ";";
 	$mysqli->query($sql) or die('Error updating picks summary: ' . $mysqli->error);
-	$sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints, survivor) values (" . $_POST['week'] . ", " . $user->userID . ", " . (int)$_POST['showPicks'] . ", " . (int)$_POST['tiebreaker'] . ", '" . $_POST['survivor'] . "');";
+	$sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints, survivor, year) values (" . $_POST['week'] . ", " . $user->userID . ", " . (int)$_POST['showPicks'] . ", " . (int)$_POST['tiebreaker'] . ", '" . $_POST['survivor'] . ", ".SEASON_YEAR.");";
 	$mysqli->query($sql) or die('Error updating picks summary: ' . $mysqli->error);
 
 	//loop through non-expire weeks and update picks
@@ -102,7 +102,7 @@ include('includes/header.php');
 	</script>
 <?php
 //display week nav
-$sql = "select distinct weekNum from " . DB_PREFIX . "schedule order by weekNum;";
+$sql = "select distinct weekNum from " . DB_PREFIX . "schedule where year = " . SEASON_YEAR . " order by weekNum;";
 $query = $mysqli->query($sql);
 $weekNav = '<div id="weekNav" class="row">';
 $weekNav .= '	<div class="navbar3 col-xs-12"><b>Go to week:</b> ';
@@ -134,7 +134,7 @@ echo $weekNav;
 	$survivorPick = "";
 
 	//get show picks status
-	$sql = "select * from " . DB_PREFIX . "picksummary where weekNum = " . $week . " and userID = " . $user->userID . ";";
+	$sql = "select * from " . DB_PREFIX . "picksummary where weekNum = " . $week . " and year = " . SEASON_YEAR . " and userID = " . $user->userID . ";";
 	$query = $mysqli->query($sql);
 	if ($query->num_rows > 0) {
 		$row = $query->fetch_assoc();
@@ -152,7 +152,7 @@ echo $weekNav;
 	$sql .= "from " . DB_PREFIX . "schedule s ";
 	$sql .= "inner join " . DB_PREFIX . "teams ht on s.homeID = ht.teamID ";
 	$sql .= "inner join " . DB_PREFIX . "teams vt on s.visitorID = vt.teamID ";
-	$sql .= "where s.weekNum = " . $week . " ";
+	$sql .= "where s.weekNum = " . $week . " and s.year = " . SEASON_YEAR . " ";
 	$sql .= "order by s.gameTimeEastern, s.gameID";
 	//echo $sql;
 	$query = $mysqli->query($sql) or die($mysqli->error);

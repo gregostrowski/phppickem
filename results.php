@@ -13,7 +13,7 @@ $weekExpired = ((date("U", time()+(SERVER_TIMEZONE_OFFSET * 3600)) > strtotime($
 include('includes/header.php');
 
 //display week nav
-$sql = "select distinct weekNum from " . DB_PREFIX . "schedule order by weekNum;";
+$sql = "select distinct weekNum from " . DB_PREFIX . "schedule where year = " . SEASON_YEAR . " order by weekNum;";
 $query = $mysqli->query($sql);
 $weekNav = '<div class="navbar3"><b>Go to week:</b> ';
 $i = 0;
@@ -33,7 +33,7 @@ echo $weekNav;
 //get array of games
 $allScoresIn = true;
 $games = array();
-$sql = "select * from " . DB_PREFIX . "schedule where weekNum = " . $week . " order by gameTimeEastern, gameID";
+$sql = "select * from " . DB_PREFIX . "schedule where weekNum = " . $week . " and year = " . SEASON_YEAR . " order by gameTimeEastern, gameID";
 $query = $mysqli->query($sql);
 while ($row = $query->fetch_assoc()) {
 	$games[$row['gameID']]['gameID'] = $row['gameID'];
@@ -73,7 +73,7 @@ $sql = "select p.userID, p.gameID, p.pickID, p.points ";
 $sql .= "from " . DB_PREFIX . "picks p ";
 $sql .= "inner join " . DB_PREFIX . "users u on p.userID = u.userID ";
 $sql .= "inner join " . DB_PREFIX . "schedule s on p.gameID = s.gameID ";
-$sql .= "where s.weekNum = " . $week . " and u.userName <> 'admin' ";
+$sql .= "where s.weekNum = " . $week. " and year = " . SEASON_YEAR . " and u.userName <> 'admin' ";
 $sql .= "order by p.userID, s.gameTimeEastern, s.gameID";
 $query = $mysqli->query($sql);
 $i = 0;

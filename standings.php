@@ -129,8 +129,8 @@ if (isset($weekStats)) {
 	$sql = "select p.userID, p.weekNum, p.survivor, s.gameID ";
 	$sql .= "from " . DB_PREFIX . "picksummary p ";
 	$sql .= "inner join " . DB_PREFIX . "users u on p.userID = u.userID ";
-	$sql .= "inner join " . DB_PREFIX . "schedule s on p.weekNum = s.weekNum ";
-	$sql .= "where u.userName <> 'admin' AND (p.survivor = s.homeID OR p.survivor = s.visitorID) AND s.type = 'REG'";
+	$sql .= "inner join " . DB_PREFIX . "schedule s on p.weekNum = s.weekNum  ";
+	$sql .= "where u.userName <> 'admin' AND (p.survivor = s.homeID OR p.survivor = s.visitorID) AND s.type = 'REG' AND s.year = " . SEASON_YEAR ." ";
 	$sql .= "order by p.userID, s.gameID";
 	$query = $mysqli->query($sql);
 	$i = 0;
@@ -145,7 +145,7 @@ if (isset($weekStats)) {
 	}
 	$query->free;
 
-	$sql = "select distinct weekNum from " . DB_PREFIX . "schedule where type = 'REG' order by weekNum;";
+	$sql = "select distinct weekNum from " . DB_PREFIX . "schedule where type = 'REG' AND year = " . SEASON_YEAR . " order by weekNum;";
 	$query = $mysqli->query($sql);
 
 	?>

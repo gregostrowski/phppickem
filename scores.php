@@ -33,7 +33,7 @@ include('includes/header.php');
 	<h1>Enter Scores - Week <?php echo $week; ?></h1>
 <?php
 //display week nav
-$sql = "select distinct weekNum from " . DB_PREFIX . "schedule order by weekNum;";
+$sql = "select distinct weekNum from " . DB_PREFIX . "schedule where year = " . SEASON_YEAR . " order by weekNum;";
 $query = $mysqli->query($sql);
 $weekNav = '<div class="navbar3"><b>Go to week:</b> ';
 $i = 0;
@@ -85,7 +85,7 @@ $sql = "select s.*, ht.city, ht.team, ht.displayName, vt.city, vt.team, vt.displ
 $sql .= "from " . DB_PREFIX . "schedule s ";
 $sql .= "inner join " . DB_PREFIX . "teams ht on s.homeID = ht.teamID ";
 $sql .= "inner join " . DB_PREFIX . "teams vt on s.visitorID = vt.teamID ";
-$sql .= "where weekNum = " . $week . " ";
+$sql .= "where weekNum = " . $week . " and year = " . SEASON_YEAR  . " ";
 $sql .= "order by gameTimeEastern";
 $query = $mysqli->query($sql);
 if ($query->num_rows > 0) {

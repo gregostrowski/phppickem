@@ -13,14 +13,13 @@ if ($_POST['action'] == 'Submit') {
   $cutoffDateTime = getCutoffDateTime($week);
 
   //update summary table
-  $sql = "delete from " . DB_PREFIX . "picksummary where weekNum = " . $_POST['week'] . " and userID = " . $_POST['userID'] . ";";
+  $sql = "delete from " . DB_PREFIX . "picksummary where weekNum = " . $_POST['week'] . " and userID = " . $_POST['userID'] . " and year = " . SEASON_YEAR . ";";
   $mysqli->query($sql) or die('Error updating picks summary: ' . $mysqli->error);
-  $sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints) values (" . $_POST['week'] . ", " . $_POST['userID'] . ", " . (int)$_POST['showPicks'] . ", " . (int)$_POST['tiebreaker'] . ", '" . $_POST['survivor'] . ");";
-  $sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints, survivor) values (" . $_POST['week'] . ", " . $_POST['userID'] . ", " . (int)$_POST['showPicks'] . ", " . (int)$_POST['tiebreaker'] . ", '" . $_POST['survivor'] . "');";
+  $sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints, survivor, year) values (" . $_POST['week'] . ", " . $_POST['userID'] . ", " . (int)$_POST['showPicks'] . ", " . (int)$_POST['tiebreaker'] . ", '" . $_POST['survivor'] . ", ".SEASON_YEAR.");";
   $mysqli->query($sql) or die('Error updating picks summary: ' . $mysqli->error);
 
   //loop through non-expire weeks and update picks (Greg edit: ignore time, admin can do anything they want)
-  $sql = "select * from " . DB_PREFIX . "schedule where weekNum = " . $_POST['week'];
+  $sql = "select * from " . DB_PREFIX . "schedule where weekNum = " . $_POST['week'] . " and year = " . SEASON_YEAR;
   //" and (DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) < gameTimeEastern and DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) < '" . $cutoffDateTime . "');";
   $query = $mysqli->query($sql);
   if ($query->num_rows > 0) {
@@ -51,7 +50,7 @@ if ($_POST['action'] == 'Submit') {
 include('includes/header.php');
 
 //display week nav
-$sql = "select distinct weekNum from " . DB_PREFIX . "schedule order by weekNum;";
+$sql = "select distinct weekNum from " . DB_PREFIX . "schedule where year = " . SEASON_YEAR ." order by weekNum;";
 $query = $mysqli->query($sql);
 $weekNav = '<div id="weekNav" class="row">';
 $weekNav .= '  <div class="navbar3 col-xs-12"><b>Go to week:</b> ';
@@ -140,7 +139,7 @@ echo "<option $sel value=\"$result[userID]\">$result[userName]</option> \n";
   $survivorPick = "";
 
   //get show picks status
-  $sql = "select * from " . DB_PREFIX . "picksummary where weekNum = " . $week . " and userID = " . $user->userID . ";";
+  $sql = "select * from " . DB_PREFIX . "picksummary where weekNum = " . $week . " and year = " . SEASON_YEAR . " and userID = " . $user->userID . ";";
   $query = $mysqli->query($sql);
   if ($query->num_rows > 0) {
     $row = $query->fetch_assoc();
@@ -158,7 +157,7 @@ echo "<option $sel value=\"$result[userID]\">$result[userName]</option> \n";
   $sql .= "from " . DB_PREFIX . "schedule s ";
   $sql .= "inner join " . DB_PREFIX . "teams ht on s.homeID = ht.teamID ";
   $sql .= "inner join " . DB_PREFIX . "teams vt on s.visitorID = vt.teamID ";
-  $sql .= "where s.weekNum = " . $week . " ";
+  $sql .= "where s.weekNum = " . $week . " and year = " . SEASON_YEAR . " ";
   $sql .= "order by s.gameTimeEastern, s.gameID";
   //echo $sql;
   $query = $mysqli->query($sql) or die($mysqli->error);
