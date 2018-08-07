@@ -41,8 +41,8 @@ include('includes/column_right.php');
 	$sql .= " min(s.gameTimeEastern) as firstGameTime,";
 	$sql .= " (select gameTimeEastern from " . DB_PREFIX . "schedule where weekNum = s.weekNum and year = " . SEASON_YEAR ." and DATE_FORMAT(gameTimeEastern, '%W') = 'Sunday' order by gameTimeEastern limit 1) as cutoffTime,";
 	$sql .= " (DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) > (select gameTimeEastern from " . DB_PREFIX . "schedule where weekNum = s.weekNum and year = " . SEASON_YEAR ." and DATE_FORMAT(gameTimeEastern, '%W') = 'Sunday' order by gameTimeEastern limit 1)) as expired ";
-	$sql .= "from " . DB_PREFIX . "schedule s ";
-	$sql .= "group by s.weekNum ";
+	$sql .= "from " . DB_PREFIX . "schedule s where s.year = " . SEASON_YEAR;
+	$sql .= " group by s.weekNum ";
 	$sql .= "order by s.weekNum;";
 	$query = $mysqli->query($sql);
 	$i = 0;
@@ -53,8 +53,8 @@ include('includes/column_right.php');
 		echo '			<div class="panel-body">' . "\n";
 		echo '			<p><b>Week ' . $row['weekNum'] . '</b><br />' . "\n";
 		# echo '			First game: ' . date('n/j g:i a', strtotime($row['firstGameTime'])-(SERVER_TIMEZONE_OFFSET * 3600)) . '<br />' . "\n";
-		echo '			First game: &nbsp; ' . date('Y_m_d - H:i', strtotime($row['firstGameTime'])-(SERVER_TIMEZONE_OFFSET * 3600)) . ' (' . SERVER_TIMEZONE_ABBR . ') <br />' . "\n";
-		echo '			Cutoff: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ' . date('Y_m_d - H:i', strtotime($row['cutoffTime'])-(SERVER_TIMEZONE_OFFSET * 3600)) . ' (' . SERVER_TIMEZONE_ABBR . ') </p>' . "\n";
+		echo '			First game: &nbsp; ' . formatDateTimezone($row['firstGameTime']) .' <br />' . "\n";
+		echo '			Cutoff: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ' . formatDateTimezone($row['cutoffTime']) . ' </p>' . "\n";
 		//echo '		</tr>'."\n";
 		if ($row['expired']) {
 			//if week is expired, show score (if scores are entered)

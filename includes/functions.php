@@ -16,13 +16,13 @@ function print_r2($val){
 function getCurrentWeek() {
 	//get the current week number
 	global $mysqli;
-	$sql = "select distinct weekNum from " . DB_PREFIX . "schedule where DATE_SUB(NOW(), INTERVAL 1 DAY) < gameTimeEastern order by weekNum limit 1";
+	$sql = "select distinct weekNum from " . DB_PREFIX . "schedule where year = " . SEASON_YEAR . " and DATE_SUB(NOW(), INTERVAL 1 DAY) < gameTimeEastern order by weekNum limit 1";
 	$query = $mysqli->query($sql);
 	if ($query->num_rows > 0) {
 		$row = $query->fetch_assoc();
 		return $row['weekNum'];
 	} else {
-		$sql = "select max(weekNum) as weekNum from " . DB_PREFIX . "schedule";
+		$sql = "select max(weekNum) as weekNum from " . DB_PREFIX . "schedule where year = " . SEASON_YEAR;
 		$query2 = $mysqli->query($sql);
 		if ($query2->num_rows > 0) {
 			$row = $query2->fetch_assoc();
@@ -50,7 +50,7 @@ function setupMailer() {
 function getCutoffDateTime($week) {
 	//get the cutoff date for a given week
 	global $mysqli;
-	$sql = "select gameTimeEastern from " . DB_PREFIX . "schedule where weekNum = " . $week . " and DATE_FORMAT(gameTimeEastern, '%W') = 'Sunday' order by gameTimeEastern limit 1;";
+	$sql = "select gameTimeEastern from " . DB_PREFIX . "schedule where weekNum = " . $week . " and year = " . SEASON_YEAR . " and DATE_FORMAT(gameTimeEastern, '%W') = 'Sunday' order by gameTimeEastern limit 1;";
 	$query = $mysqli->query($sql);
 	if ($query->num_rows > 0) {
 		$row = $query->fetch_assoc();
@@ -63,7 +63,7 @@ function getCutoffDateTime($week) {
 function getFirstGameTime($week) {
 	//get the first game time for a given week
 	global $mysqli;
-	$sql = "select gameTimeEastern from " . DB_PREFIX . "schedule where weekNum = " . $week . " order by gameTimeEastern limit 1";
+	$sql = "select gameTimeEastern from " . DB_PREFIX . "schedule where weekNum = " . $week . " and year = " . SEASON_YEAR ." order by gameTimeEastern limit 1";
 	$query = $mysqli->query($sql);
 	if ($query->num_rows > 0) {
 		$row = $query->fetch_assoc();
@@ -95,7 +95,7 @@ function getGameIDByTeamName($week, $teamName) {
 	$sql .= "from " . DB_PREFIX . "schedule s ";
 	$sql .= "inner join " . DB_PREFIX . "teams t1 on s.homeID = t1.teamID ";
 	$sql .= "inner join " . DB_PREFIX . "teams t2 on s.visitorID = t2.teamID ";
-	$sql .= "where weekNum = " . $week;
+	$sql .= "where weekNum = " . $week . " and s.year = " . SEASON_YEAR;
 	$sql .= " and ((t1.city = '" . $teamName . "' or t1.displayName = '" . $teamName . "') or (t2.city = '" . $teamName . "' or t2.displayName = '" . $teamName . "'))";
 	$query = $mysqli->query($sql);
 	if ($query->num_rows > 0) {
