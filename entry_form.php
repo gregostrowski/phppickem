@@ -9,11 +9,11 @@ if ($_POST['action'] == 'Submit') {
 	//update summary table
 	$sql = "delete from " . DB_PREFIX . "picksummary where weekNum = " . $_POST['week'] . " and userID = " . $user->userID . " and year = " . SEASON_YEAR . ";";
 	$mysqli->query($sql) or die('Error updating picks summary: ' . $mysqli->error);
-	$sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints, survivor, year) values (" . $_POST['week'] . ", " . $user->userID . ", " . (int)$_POST['showPicks'] . ", " . (int)$_POST['tiebreaker'] . ", '" . $_POST['survivor'] . ", ".SEASON_YEAR.");";
+	$sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints, survivor, year) values (" . $_POST['week'] . ", " . $user->userID . ", " . (int)$_POST['showPicks'] . ", " . (int)$_POST['tiebreaker'] . ", '" . $_POST['survivor'] . "', '".SEASON_YEAR."');";
 	$mysqli->query($sql) or die('Error updating picks summary: ' . $mysqli->error);
 
 	//loop through non-expire weeks and update picks
-	$sql = "select * from " . DB_PREFIX . "schedule where weekNum = " . $_POST['week'] . " and (DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) < gameTimeEastern and DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) < '" . $cutoffDateTime . "');";
+	$sql = "select * from " . DB_PREFIX . "schedule where weekNum = " . $_POST['week'] . " and year = " . SEASON_YEAR . " and (DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) < gameTimeEastern and DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) < '" . $cutoffDateTime . "');";
 	$query = $mysqli->query($sql);
 	if ($query->num_rows > 0) {
 		while ($row = $query->fetch_assoc()) {
