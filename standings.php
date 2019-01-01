@@ -130,7 +130,8 @@ if (isset($weekStats)) {
 	$sql .= "from " . DB_PREFIX . "picksummary p ";
 	$sql .= "inner join " . DB_PREFIX . "users u on p.userID = u.userID ";
 	$sql .= "inner join " . DB_PREFIX . "schedule s on p.weekNum = s.weekNum  ";
-	$sql .= "where u.userName <> 'admin' AND (p.survivor = s.homeID OR p.survivor = s.visitorID) AND s.type = 'REG' AND p.year = " . SEASON_YEAR ." ";
+	$sql .= "where u.userName <> 'admin' AND (p.survivor = s.homeID OR p.survivor = s.visitorID) ";
+	$sql .= "and s.type = 'REG' and p.year = " . SEASON_YEAR ." and s.year = " . SEASON_YEAR ." ";
 	$sql .= "order by p.userID, s.gameID";
 	$query = $mysqli->query($sql);
 	$i = 0;
@@ -173,6 +174,7 @@ if (isset($weekStats)) {
 			</thead>
 			<tbody>
 			<?php
+				// Sorts based on total correct survivor picks
 				arSort($survivorTotals);
 
 				foreach($survivorTotals as $userID => $totalCorrect) {

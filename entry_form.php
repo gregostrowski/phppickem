@@ -227,7 +227,7 @@ echo $weekNav;
 
 		}
 		echo '		</div>' . "\n";
-		if (SHOW_TIEBREAKER_POINTS && SEASON_TYPE != 'POST') {
+		if (SHOW_TIEBREAKER_POINTS && $week < 18) {
 			echo '          <div title="Tiebreaker" class="row bg-row1">'."\n";
 			echo '            <div class="col-xs-12 center">' . "\n";
 			echo '              <p>Combined score in Monday night\'s game<br /><strong>'.$visitorTeam->team.' vs '. $homeTeam->team.'</strong><br />'." \n";
@@ -239,7 +239,7 @@ echo $weekNav;
 			echo '          <input type="hidden" name="tiebreaker" id="tiebreaker" value="0" />' . "\n";
 		}
 
-		if(SEASON_TYPE == 'REG') {
+		if($week < 18) {
 			echo '          <div title="Tiebreaker" class="row bg-row1">'."\n";
 			echo '            <div class="col-xs-12 center">' . "\n";
 			echo '						  <p>Survior Pick  <br />'."\n";
