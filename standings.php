@@ -130,7 +130,8 @@ if (isset($weekStats)) {
 	$sql .= "from " . DB_PREFIX . "picksummary p ";
 	$sql .= "inner join " . DB_PREFIX . "users u on p.userID = u.userID ";
 	$sql .= "inner join " . DB_PREFIX . "schedule s on p.weekNum = s.weekNum  ";
-	$sql .= "where u.userName <> 'admin' AND (p.survivor = s.homeID OR p.survivor = s.visitorID) AND s.type = 'REG' AND s.year = " . SEASON_YEAR ." ";
+	$sql .= "where u.userName <> 'admin' AND (p.survivor = s.homeID OR p.survivor = s.visitorID) ";
+	$sql .= "and s.type = 'REG' and p.year = " . SEASON_YEAR ." and s.year = " . SEASON_YEAR ." ";
 	$sql .= "order by p.userID, s.gameID";
 	$query = $mysqli->query($sql);
 	$i = 0;
@@ -140,6 +141,8 @@ if (isset($weekStats)) {
 		if (!empty($games[$row['gameID']]['winnerID']) && $row['survivor'] == $games[$row['gameID']]['winnerID']) {
 			//player has picked the winning team
 			$survivorTotals[$row['userID']] += 1;
+		} else {
+			$survivorTotals[$row['userID']] += 0;
 		}
 		$i++;
 	}
@@ -147,7 +150,7 @@ if (isset($weekStats)) {
 
 	$sql = "select distinct weekNum from " . DB_PREFIX . "schedule where type = 'REG' AND year = " . SEASON_YEAR . " order by weekNum;";
 	$query = $mysqli->query($sql);
-
+	
 	?>
 <div class="row">
 	<div class="col-xs-12">
@@ -172,6 +175,7 @@ if (isset($weekStats)) {
 			<tbody>
 			<?php
 				arSort($survivorTotals);
+
 				foreach($survivorTotals as $userID => $totalCorrect) {
 					$pick = '';
 					$tmpUser = $login->get_user_by_id($userID);

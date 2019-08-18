@@ -9,11 +9,11 @@ if ($_POST['action'] == 'Submit') {
 	//update summary table
 	$sql = "delete from " . DB_PREFIX . "picksummary where weekNum = " . $_POST['week'] . " and userID = " . $user->userID . " and year = " . SEASON_YEAR . ";";
 	$mysqli->query($sql) or die('Error updating picks summary: ' . $mysqli->error);
-	$sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints, survivor, year) values (" . $_POST['week'] . ", " . $user->userID . ", " . (int)$_POST['showPicks'] . ", " . (int)$_POST['tiebreaker'] . ", '" . $_POST['survivor'] . ", ".SEASON_YEAR.");";
+	$sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints, survivor, year) values (" . $_POST['week'] . ", " . $user->userID . ", " . (int)$_POST['showPicks'] . ", " . (int)$_POST['tiebreaker'] . ", '" . $_POST['survivor'] . "', '".SEASON_YEAR."');";
 	$mysqli->query($sql) or die('Error updating picks summary: ' . $mysqli->error);
 
 	//loop through non-expire weeks and update picks
-	$sql = "select * from " . DB_PREFIX . "schedule where weekNum = " . $_POST['week'] . " and (DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) < gameTimeEastern and DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) < '" . $cutoffDateTime . "');";
+	$sql = "select * from " . DB_PREFIX . "schedule where weekNum = " . $_POST['week'] . " and year = " . SEASON_YEAR . " and (DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) < gameTimeEastern and DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) < '" . $cutoffDateTime . "');";
 	$query = $mysqli->query($sql);
 	if ($query->num_rows > 0) {
 		while ($row = $query->fetch_assoc()) {
@@ -227,7 +227,7 @@ echo $weekNav;
 
 		}
 		echo '		</div>' . "\n";
-		if (SHOW_TIEBREAKER_POINTS && SEASON_TYPE != 'POST') {
+		if (SHOW_TIEBREAKER_POINTS && $week < 18) {
 			echo '          <div title="Tiebreaker" class="row bg-row1">'."\n";
 			echo '            <div class="col-xs-12 center">' . "\n";
 			echo '              <p>Combined score in Monday night\'s game<br /><strong>'.$visitorTeam->team.' vs '. $homeTeam->team.'</strong><br />'." \n";
@@ -239,7 +239,7 @@ echo $weekNav;
 			echo '          <input type="hidden" name="tiebreaker" id="tiebreaker" value="0" />' . "\n";
 		}
 
-		if(SEASON_TYPE == 'REG') {
+		if($week < 18) {
 			echo '          <div title="Tiebreaker" class="row bg-row1">'."\n";
 			echo '            <div class="col-xs-12 center">' . "\n";
 			echo '						  <p>Survior Pick  <br />'."\n";
@@ -254,6 +254,23 @@ echo $weekNav;
 			}
 			echo '								</select>'."\n";
 			echo '							</p>'."\n";
+			echo '            </div>'."\n";
+			echo '          </div>'."\n";
+		}
+
+		// superbowl
+		if($week == 21) {
+			echo '          <div title="Tiebreaker" class="row bg-row1">'."\n";
+			echo '            <div class="col-xs-12 center">' . "\n";
+			echo '              <p>Combined score at halftime<br /><strong>'.$visitorTeam->team.' vs '. $homeTeam->team.'</strong><br />'." \n";
+			echo '              <input style="text-align:center;" type="text" name="tiebreaker" id="tiebreaker" maxlength="3" size=12 value="' . $tiebreaker . '" /> ' . " \n";
+			echo '            </div>'."\n";
+			echo '          </div>'."\n";
+
+			echo '          <div title="Tiebreaker" class="row bg-row1">'."\n";
+			echo '            <div class="col-xs-12 center">' . "\n";
+			echo '              <p>Combined score at the end of the game<br /><strong>'.$visitorTeam->team.' vs '. $homeTeam->team.'</strong><br />'." \n";
+			echo '              <input style="text-align:center;" type="text" name="survivor" id="survivor" maxlength="3" size=12 value="' . $survivorPick . '" /> ' . " \n";
 			echo '            </div>'."\n";
 			echo '          </div>'."\n";
 		}

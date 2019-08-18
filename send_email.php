@@ -111,7 +111,7 @@ if ($_POST['action'] == 'Send Message') {
 	if ($_POST['cannedMsg'] == 'WEEKLY_PICKS_REMINDER') {
 		//select only users missing picks for the current week
 		$sql = "select u.firstname, u.email,";
-		$sql .= "(select count(p.pickID) from nflp_picks p inner join nflp_schedule s on p.gameID = s.gameID where userID = u.userID and s.weekNum = " . $week . ") as userPicks ";
+		$sql .= "(select count(p.pickID) from nflp_picks p inner join nflp_schedule s on p.gameID = s.gameID where userID = u.userID and s.weekNum = " . $week . " and s.year = " . SEASON_YEAR . ") as userPicks ";
 		$sql .= "from " . DB_PREFIX . "users u ";
 		$sql .= "where u.`status` = 1 and u.userName <> 'admin' ";
 		// $sql .= "group by u.firstname, u.email ";

@@ -165,11 +165,16 @@ if ($hideMyPicks && !$weekExpired) {
 </div>
 </div></div>
 
+<?
+$tieBreakerHeader = $week != 21 ? 'Tie Breaker' : 'Halftime Points';
+$survivorHeader = $week != 21 ? 'Survivor' : 'End Points';
+?>
+
 <div class="panel self-picks"><div class="panel-body">
 <div class="table-responsive no-margin">
 <table class="table table-striped no-margin">
 	<thead>
-		<tr><th align="left">Player</th><th colspan="<?php echo sizeof($games) -1 ; ?>">Week <?php echo $week; ?></th><th class="center">Tie Breaker</th><th>Survivor</th><th align="left">Score</th></tr>
+		<tr><th align="left">Player</th><th colspan="<?php echo sizeof($games) -1 ; ?>">Week <?php echo $week; ?></th><th class="center"><?php echo $tieBreakerHeader; ?></th><th><?php echo $survivorHeader; ?></th><th align="left">Score</th></tr>
 	</thead>
 	<tbody></tbody>
 </table>
@@ -191,7 +196,7 @@ if (sizeof($playerTotals) > 0) {
 <div class="table-responsive no-margin">
 <table class="table table-striped no-margin">
 	<thead>
-		<tr><th align="left">Player</th><th colspan="<?php echo sizeof($games) -1 ; ?>">Week <?php echo $week; ?></th><th class="center">Tie Breaker</th><th>Survivor</th><th align="left">Score</th></tr>
+	<tr><th align="left">Player</th><th colspan="<?php echo sizeof($games) -1 ; ?>">Week <?php echo $week; ?></th><th class="center"><?php echo $tieBreakerHeader; ?></th><th><?php echo $survivorHeader; ?></th><th align="left">Score</th></tr>
 	</thead>
 	<tbody>
 <?php
@@ -239,8 +244,7 @@ if (sizeof($playerTotals) > 0) {
 			$pick = $playerPicks[$userID][$game['gameID']];
 
 			if(empty($pick)){$pick = 'no_pick';}
-			// $score = $game[$pick]['score'] ;
-			// $pick = '<img src="images/helmets_small/' . $pick . 'R.gif" / title="'.$pick.'">';
+			
 			$pick = '<img src="images/logos/' . $pick . '.svg" / title="'.$pick.'" height="28" width="42">';
 
 			if (!empty($game['winnerID'])) {
@@ -254,7 +258,7 @@ if (sizeof($playerTotals) > 0) {
 				if (!$gameIsLocked && !$weekExpired && $hidePicks && (int)$userID !== (int)$user->userID) {
 					$pick = '***';
 					$tieBreaker = '***';
-					if($survivor == $game['visitorID'] || $survivor == $game['homeID']) {
+					if($survivor == $game['visitorID'] || $survivor == $game['homeID'] || $week == 21) {
 						$survivorPick = '***';
 					}
 				}
@@ -262,9 +266,14 @@ if (sizeof($playerTotals) > 0) {
 			// echo '		<td class="pickTD"><img src="images/helmets_small/' . $pick . 'R.gif" /></td>' . "\n";
 			echo '		<td class="pickTD">' . $pick . '</td>' . "\n";
 		}
+		if($week == 21) {
+			echo '<td></td>';
+		}
 		if(!is_null($survivor) && $survivor != '') {
 			if($survivorPick == '***') {
 				$survivorEl = $survivorPick;
+			} elseif ($week == 21) {
+				$survivorEl = $survivor;
 			} else {
 				$survivorEl = '<img src="images/logos/' . $survivor . '.svg" / title="'.$survivor.'" height="28" width="42">';
 				if(in_array($survivor, $winnerList)) {
