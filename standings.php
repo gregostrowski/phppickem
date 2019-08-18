@@ -174,6 +174,7 @@ if (isset($weekStats)) {
 			</thead>
 			<tbody>
 			<?php
+				// Sorts based on total correct survivor picks
 				arSort($survivorTotals);
 
 				foreach($survivorTotals as $userID => $totalCorrect) {

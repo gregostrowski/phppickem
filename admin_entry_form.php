@@ -15,7 +15,7 @@ if ($_POST['action'] == 'Submit') {
   //update summary table
   $sql = "delete from " . DB_PREFIX . "picksummary where weekNum = " . $_POST['week'] . " and userID = " . $_POST['userID'] . " and year = " . SEASON_YEAR . ";";
   $mysqli->query($sql) or die('Error updating picks summary: ' . $mysqli->error);
-  $sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints, survivor, year) values (" . $_POST['week'] . ", " . $_POST['userID'] . ", " . (int)$_POST['showPicks'] . ", " . (int)$_POST['tiebreaker'] . ", '" . $_POST['survivor'] . ", ".SEASON_YEAR.");";
+  $sql = "insert into " . DB_PREFIX . "picksummary (weekNum, userID, showPicks, tieBreakerPoints, survivor, year) values (" . $_POST['week'] . ", " . $_POST['userID'] . ", " . (int)$_POST['showPicks'] . ", " .(int)$_POST['tiebreaker'] . ", '" . $_POST['survivor'] . "', '".SEASON_YEAR."');";
   $mysqli->query($sql) or die('Error updating picks summary: ' . $mysqli->error);
 
   //loop through non-expire weeks and update picks (Greg edit: ignore time, admin can do anything they want)

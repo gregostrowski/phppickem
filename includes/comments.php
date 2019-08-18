@@ -56,6 +56,10 @@ if (COMMENTS_SYSTEM == 'basic') {
  	<script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = '<?php echo DISQUS_SHORTNAME; ?>'; // required: replace example with your forum shortname
+		var disqus_config = function () {			
+			// Replace PAGE_IDENTIFIER with your page's unique identifier variable
+			this.page.identifier = 'all'; 
+		};
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {
