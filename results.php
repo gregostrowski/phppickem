@@ -174,7 +174,7 @@ $survivorHeader = $week != 21 ? 'Survivor' : 'End Points';
 <div class="table-responsive no-margin">
 <table class="table table-striped no-margin">
 	<thead>
-		<tr><th align="left">Player</th><th colspan="<?php echo sizeof($games) -1 ; ?>">Week <?php echo $week; ?></th><th class="center"><?php echo $tieBreakerHeader; ?></th><th><?php echo $survivorHeader; ?></th><th align="left">Score</th></tr>
+		<tr><th align="left" class="visible-xs visible-sm">Score</th><th align="left">Player</th><th colspan="<?php echo sizeof($games) -1 ; ?>">Week <?php echo $week; ?></th><th class="center"><?php echo $tieBreakerHeader; ?></th><th><?php echo $survivorHeader; ?></th><th align="left">Score</th></tr>
 	</thead>
 	<tbody></tbody>
 </table>
@@ -196,7 +196,7 @@ if (sizeof($playerTotals) > 0) {
 <div class="table-responsive no-margin">
 <table class="table table-striped no-margin">
 	<thead>
-	<tr><th align="left">Player</th><th colspan="<?php echo sizeof($games) -1 ; ?>">Week <?php echo $week; ?></th><th class="center"><?php echo $tieBreakerHeader; ?></th><th><?php echo $survivorHeader; ?></th><th align="left">Score</th></tr>
+	<tr><th align="left" class="visible-xs visible-sm">Score</th><th align="left">Player</th><th colspan="<?php echo sizeof($games) -1 ; ?>">Week <?php echo $week; ?></th><th class="center"><?php echo $tieBreakerHeader; ?></th><th><?php echo $survivorHeader; ?></th><th align="left">Score</th></tr>
 	</thead>
 	<tbody>
 <?php
@@ -236,8 +236,10 @@ if (sizeof($playerTotals) > 0) {
 		if($user->is_admin) {
 			$adminPickCount = '('. sizeof($playerPicks[$userID]) . '/'. sizeof($games) .')';
 		}
+		echo '		<td class="visible-xs visible-sm" nowrap>&nbsp;</td>' . "\n";
 		echo '		<td colspan="4">' . $nameFormat . ' ' . $adminPickCount . '</td></tr>' . "\n";
 		echo '<tr '. ($userID == $user->userID ? "class='mypick'":"") .'>' . "\n";
+		echo '		<td class="visible-xs visible-sm" nowrap><b>' . $totalCorrect . '/' . sizeof($games) . '</b></td>' . "\n";
 		//loop through all games
 		foreach($games as $game) {
 			$pick = '';
