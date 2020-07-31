@@ -4,40 +4,27 @@ class Login{
 	}
 
 	function new_user($user_name, $password, $confirm) {
-		global $crypto;
 		$confirm = $this->no_injections($confirm);
 		$password = $this->no_injections($password);
 		$user_name = $this->no_injections($user_name);
 		if($confirm === $password && $this->confirm_user($user_name)){
-			$this->salt = substr($crypto->encrypt((uniqid(mt_rand(), true))), 0, 10);
-			$this->secure_password = $crypto->encrypt($this->salt . $crypto->encrypt($password));
+			$this->secure_password = password_hash($password, PASSWORD_DEFAULT);
 			$this->store_user($user_name);
 		}
 	}
 
 	function store_user($user_name) {
 		global $mysqli;
-		$salty = $this->salt;
-		$user_password_SQL_raw = "INSERT INTO " . DB_PREFIX . "users SET userName = '".$user_name."', password = '".$this->secure_password."', salt = '".$salty."'";
+		$user_password_SQL_raw = "INSERT INTO " . DB_PREFIX . "users SET userName = '".$user_name."', password = '".$this->secure_password."'";
 		$user_password_SQL_result = $mysqli->query($user_password_SQL_raw);
 	}
 
 	function validate_password() {
-		global $crypto;
 		$user_name = $this->no_injections($_POST['username']);
 		$password = $this->no_injections($_POST['password']);
 		$user = $this->get_user($user_name);
-		$passwordEncrypted = $crypto->encrypt($user->salt . $crypto->encrypt($password));
-		/*echo 'User input:<br />'.
-			'Username: '.$user_name.'<br />'.
-			'Password: '.$password.'<br />'.
-			'Password (encrypted): '.$passwordEncrypted.'<br /><br />'.
-			'Database:</br />'.
-			'Username: '.$user->userName.'<br />'.
-			'Password: '.$user->password.'<br />'.
-			'Salt: '.$user->salt.'<br />'.
-			'Password (decrypted): '.$crypto->decrypt($user->salt . $user->password);*/
-		if (!empty($user) && !empty($password) && $user->password == $passwordEncrypted) {
+
+		if (!empty($user) && !empty($password) && password_verify($password, $user->password)) {
 			$_SESSION['logged'] = 'yes';
 			$_SESSION['loggedInUser'] = $user->userName;
 			$_SESSION['is_admin'] = $user->is_admin;

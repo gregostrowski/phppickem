@@ -28,10 +28,9 @@ switch ($action) {
 					$query = $mysqli->query($sql);
 					if ($query->num_rows == 0) {
 						//form is valid, perform insert
-						$salt = substr($crypto->encrypt((uniqid(mt_rand(), true))), 0, 10);
-						$secure_password = $crypto->encrypt($salt . $crypto->encrypt($password));
-						$sql = "INSERT INTO " . DB_PREFIX . "users (userName, password, salt, firstname, lastname, email, status)
-							VALUES ('".$userName."', '".$secure_password."', '".$salt."', '".$firstname."', '".$lastname."', '".$email."', 1);";
+						$secure_password =  password_hash($password, PASSWORD_DEFAULT);
+						$sql = "INSERT INTO " . DB_PREFIX . "users (userName, password, firstname, lastname, email, status)
+							VALUES ('".$userName."', '".$secure_password."', '".$firstname."', '".$lastname."', '".$email."', 1);";
 						$mysqli->query($sql) or die($mysqli->error);
 
 						$display = '<div class="responseOk">User ' . $userName . ' Updated</div><br/>';

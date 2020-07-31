@@ -34,10 +34,9 @@ if (isset($_POST['submit'])) {
 					if ($query->num_rows > 0) {
 						$display = '<div class="responseError">Email address already exists.  If this is your email account, please log in or reset your password.</div><br/>';
 					} else {
-						$salt = substr($crypto->encrypt((uniqid(mt_rand(), true))), 0, 10);
-						$secure_password = $crypto->encrypt($salt . $crypto->encrypt($password));
-						$sql = "INSERT INTO " . DB_PREFIX . "users (userName, password, salt, firstname, lastname, email, status)
-							VALUES ('".$username."', '".$secure_password."', '".$salt."', '".$firstname."', '".$lastname."', '".$mysqli->real_escape_string($email)."', 1);";
+						$secure_password = password_hash($password, PASSWORD_DEFAULT);
+						$sql = "INSERT INTO " . DB_PREFIX . "users (userName, password, firstname, lastname, email, status)
+							VALUES ('".$username."', '".$secure_password."', '".$firstname."', '".$lastname."', '".$mysqli->real_escape_string($email)."', 1);";
 						$mysqli->query($sql) or die($mysqli->error);
 
 						//send confirmation email
@@ -49,7 +48,7 @@ if (isset($_POST['submit'])) {
 
 						// html text block
 						$mail->Body = '<p>Thank you for signing up for the NFL Pick \'Em Pool.  Please click the below link to confirm your account:<br />' . "\n" .
-							SITE_URL . 'signup.php?confirm=' . $crypto->encrypt($username) . '</p>';
+							SITE_URL . 'signup.php?confirm=' .$username . '</p>';
 
 						$mail->send();
 

@@ -153,7 +153,7 @@ CREATE TABLE `nflp_users` (
   `userID` int(11) NOT NULL AUTO_INCREMENT,
   `userName` varchar(32) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `salt` varchar(255) NOT NULL,
+  `salt` varchar(255) DEFAULT NULL,
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
   `email` varchar(255) NOT NULL,

@@ -14,9 +14,8 @@ if (is_array($_POST) && sizeof($_POST) > 0) {
 
 		//generate random password and update the db
 		$password = randomString(10);
-		$salt = substr($crypto->encrypt((uniqid(mt_rand(), true))), 0, 10);
-		$secure_password = $crypto->encrypt($salt . $crypto->encrypt($password));
-		$sql = "update " . DB_PREFIX . "users set salt = '".$salt."', password = '".$secure_password."' where userName='".$_POST['userName']."' and email = '".$_POST['email']."';";
+		$secure_password = password_hash($password, PASSWORD_DEFAULT);
+		$sql = "update " . DB_PREFIX . "users set password = '".$secure_password."' where userName='".$_POST['userName']."' and email = '".$_POST['email']."';";
 		$mysqli->query($sql) or die($mysqli->error);
 
 		//send confirmation email
