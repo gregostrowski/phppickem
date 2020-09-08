@@ -1,6 +1,5 @@
 <?php
 require('includes/application_top.php');
-
 $weekStats = array();
 $playerTotals = array();
 $possibleScoreTotal = 0;
@@ -131,7 +130,7 @@ if (isset($weekStats)) {
 	$sql .= "inner join " . DB_PREFIX . "users u on p.userID = u.userID ";
 	$sql .= "inner join " . DB_PREFIX . "schedule s on p.weekNum = s.weekNum  ";
 	$sql .= "where u.userName <> 'admin' AND (p.survivor = s.homeID OR p.survivor = s.visitorID) ";
-	$sql .= "and s.type = 'REG' and p.year = " . SEASON_YEAR ." and s.year = " . SEASON_YEAR ." ";
+	$sql .= "and s.type = 'REG' and p.year = " . $year ." and s.year = " . $year ." ";
 	$sql .= "order by p.userID, s.gameID";
 	$query = $mysqli->query($sql);
 	$i = 0;
@@ -148,7 +147,7 @@ if (isset($weekStats)) {
 	}
 	$query->free;
 
-	$sql = "select distinct weekNum from " . DB_PREFIX . "schedule where type = 'REG' AND year = " . SEASON_YEAR . " order by weekNum;";
+	$sql = "select distinct weekNum from " . DB_PREFIX . "schedule where type = 'REG' AND year = " . $year . " order by weekNum;";
 	$query = $mysqli->query($sql);
 	
 	?>

@@ -48,7 +48,7 @@ function auto_version($file)
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<div id="logo" class="navbar-brand"><img src="images/logos/NFL.svg" alt="NFL Pick 'Em <?php echo SEASON_YEAR; ?>" class="img-responsive" /></div>
+						<div id="logo" class="navbar-brand"><img src="images/logos/NFL.svg" alt="NFL Pick 'Em <?php echo $year; ?>" class="img-responsive" /></div>
 						<div id="site-title" class="navbar-brand">Smada Pick'em</div>
 					</div>
 					<div class="navbar-collapse collapse">

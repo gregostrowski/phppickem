@@ -194,7 +194,7 @@ $query->free;
 	$sql = "select s.*, ht.city, ht.team, ht.displayName, vt.city, vt.team, vt.displayName from " . DB_PREFIX . "schedule s ";
 	$sql .= "inner join " . DB_PREFIX . "teams ht on s.homeID = ht.teamID ";
 	$sql .= "inner join " . DB_PREFIX . "teams vt on s.visitorID = vt.teamID ";
-	$where .= " where s.weekNum = " . $week . " and s.year = " . SEASON_YEAR;
+	$where .= " where s.weekNum = " . $week . " and s.year = " . $year;
 	$sql .= $where . " order by gameTimeEastern";
 	$query = $mysqli->query($sql);
 	if ($query->num_rows > 0) {

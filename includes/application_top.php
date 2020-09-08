@@ -65,7 +65,8 @@ if ($_SESSION['loggedInUser'] === 'admin' && $_SESSION['logged'] === 'yes') {
 	//$isAdmin = 1;
 } else {
 	//$isAdmin = 0;
-	//get current week
+	//get current week\
+	$year = getSeasonYear();
 	$currentWeek = getCurrentWeek();
 
 	$cutoffDateTime = getCutoffDateTime($currentWeek);
@@ -74,3 +75,4 @@ if ($_SESSION['loggedInUser'] === 'admin' && $_SESSION['logged'] === 'yes') {
 	$firstGameExpired = ((date("U", time()+(SERVER_TIMEZONE_OFFSET * 3600)) > strtotime($firstGameTime)) ? true : false);
 	$weekExpired = ((date("U", time()+(SERVER_TIMEZONE_OFFSET * 3600)) > strtotime($cutoffDateTime)) ? true : false);
 }
+

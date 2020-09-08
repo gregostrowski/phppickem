@@ -39,9 +39,9 @@ include('includes/column_right.php');
 
 	$sql = "select s.weekNum, count(s.gameID) as gamesTotal,";
 	$sql .= " min(s.gameTimeEastern) as firstGameTime,";
-	$sql .= " (select gameTimeEastern from " . DB_PREFIX . "schedule where weekNum = s.weekNum and year = " . SEASON_YEAR ." and DATE_FORMAT(gameTimeEastern, '%W') = 'Sunday' order by gameTimeEastern limit 1) as cutoffTime,";
-	$sql .= " (DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) > (select gameTimeEastern from " . DB_PREFIX . "schedule where weekNum = s.weekNum and year = " . SEASON_YEAR ." and DATE_FORMAT(gameTimeEastern, '%W') = 'Sunday' order by gameTimeEastern limit 1)) as expired ";
-	$sql .= "from " . DB_PREFIX . "schedule s where s.year = " . SEASON_YEAR;
+	$sql .= " (select gameTimeEastern from " . DB_PREFIX . "schedule where weekNum = s.weekNum and year = " . $year ." and DATE_FORMAT(gameTimeEastern, '%W') = 'Sunday' order by gameTimeEastern limit 1) as cutoffTime,";
+	$sql .= " (DATE_ADD(NOW(), INTERVAL " . SERVER_TIMEZONE_OFFSET . " HOUR) > (select gameTimeEastern from " . DB_PREFIX . "schedule where weekNum = s.weekNum and year = " . $year ." and DATE_FORMAT(gameTimeEastern, '%W') = 'Sunday' order by gameTimeEastern limit 1)) as expired ";
+	$sql .= "from " . DB_PREFIX . "schedule s where s.year = " . $year;
 	$sql .= " group by s.weekNum ";
 	$sql .= "order by s.weekNum;";
 	$query = $mysqli->query($sql);

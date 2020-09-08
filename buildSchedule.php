@@ -5,7 +5,7 @@ $weeks = 17;
 $schedule = array();
 
 for ($week = 1; $week <= $weeks; $week++) {
-	$url = "http://www.nfl.com/ajax/scorestrip?season=".SEASON_YEAR."&seasonType=REG&week=".$week;
+	$url = "http://www.nfl.com/ajax/scorestrip?season=".$year."&seasonType=REG&week=".$week;
 	if ($xmlData = @file_get_contents($url)) {
 		$xml = simplexml_load_string($xmlData);
 		$json = json_encode($xml);
@@ -54,7 +54,7 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header('Content-Type: application/vnd.ms-excel;');
 //header("Content-type: application/x-msexcel");
 //header("Content-type: application/x-msdownload");
-header("Content-Disposition: attachment; filename=nfl_schedule_".SEASON_YEAR.".xls");
+header("Content-Disposition: attachment; filename=nfl_schedule_".$year.".xls");
 
 echo $output;
 //echo '<pre>';
