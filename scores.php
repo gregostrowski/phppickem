@@ -40,7 +40,7 @@ $i = 0;
 while ($row = $query->fetch_assoc()) {
 	if ($i > 0) $weekNav .= ' | ';
 	if ($week !== (int)$row['weekNum']) {
-		$weekNav .= '<a href="scores.php?week=' . $row['weekNum'] . '">' . $row['weekNum'] . '</a>';
+		$weekNav .= '<a href="scores.php?week=' . $row['weekNum'] . '&year='. $year .'">' . $row['weekNum'] . '</a>';
 	} else {
 		$weekNav .= $row['weekNum'];
 	}

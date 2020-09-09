@@ -493,9 +493,12 @@ function getTeamStreak($teamID,$week) {
 	$query->free;
 }
 
-function getTieBreaker($userID, $week) {
+function getTieBreaker($userID, $week, $year) {
 	//get Tie-Breaker score
 	global $mysqli;
+	if(empty($year)) {
+		$year = getSeasonYear();
+	}
 	$sql = "select tieBreakerPoints from " . DB_PREFIX . "picksummary where userID = " . $userID . " and weekNum = " . $week . " and year = " . $year;
 	$query = $mysqli->query($sql);
 	if ($query->num_rows > 0) {
@@ -505,9 +508,11 @@ function getTieBreaker($userID, $week) {
 	return 0;
 }
 
-function getMondayCombinedScore($week) {
+function getMondayCombinedScore($week, $year) {
 	global $mysqli;
-	$year = getSeasonYear();
+	if(empty($year)) {
+		$year = getSeasonYear();
+	}
 	$sql = "select * from " . DB_PREFIX . "schedule where weekNum = " . $week . " and year = " . $year . " order by gameTimeEastern DESC, gameID DESC limit 1";
 	$query = $mysqli->query($sql);
 	if ($query->num_rows > 0) {
@@ -518,9 +523,11 @@ function getMondayCombinedScore($week) {
 	return $combinedScore;
 }
 
-function getSurvivorPick($userID, $week) {
+function getSurvivorPick($userID, $week, $year) {
 	global $mysqli;
-	$year = getSeasonYear();
+	if(empty($year)) {
+		$year = getSeasonYear();
+	}
 	$sql = "select survivor from " . DB_PREFIX . "picksummary where userID = " . $userID . " and weekNum = " . $week . " and year = " . $year;
 	$query = $mysqli->query($sql);
 	if ($query->num_rows > 0) {

@@ -20,7 +20,7 @@ $i = 0;
 while ($row = $query->fetch_assoc()) {
 	if ($i > 0) $weekNav .= ' | ';
 	if ($week !== (int)$row['weekNum']) {
-		$weekNav .= '<a href="results.php?week=' . $row['weekNum'] . '">' . $row['weekNum'] . '</a>';
+		$weekNav .= '<a href="results.php?week=' . $row['weekNum'] . '&year='. $year .'">' . $row['weekNum'] . '</a>';
 	} else {
 		$weekNav .= '<b>' . $row['weekNum'] . '</b>';
 	}
@@ -204,9 +204,9 @@ if (sizeof($playerTotals) > 0) {
 	arsort($playerTotals);
 	foreach($playerTotals as $userID => $totalCorrect) {
 		$hidePicks = hidePicks($userID, $week);
-		$tieBreaker = abs(getMondayCombinedScore($week) - getTieBreaker($userID, $week));
+		$tieBreaker = abs(getMondayCombinedScore($week, $year) - getTieBreaker($userID, $week, $year));
 
-		$survivor = getSurvivorPick($userID, $week);
+		$survivor = getSurvivorPick($userID, $week, $year);
 		$survivorEl = '';
 		$survivorPick = '';
 
