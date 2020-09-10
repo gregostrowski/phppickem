@@ -240,10 +240,12 @@ function gameIsLocked($gameID) {
 	die('Error getting game locked status: ' . $mysqli->error);
 }
 
-function hidePicks($userID, $week) {
+function hidePicks($userID, $week, $year) {
 	//find out if user is hiding picks for a given week
 	global $mysqli;
-	$year = getSeasonYear();
+	if(empty($year)) {
+		$year = getSeasonYear();
+	}
 	$sql = "select showPicks from " . DB_PREFIX . "picksummary where userID = " . $userID . " and weekNum = " . $week . " and year = " . $year;
 	$query = $mysqli->query($sql);
 	if ($query->num_rows > 0) {
@@ -338,7 +340,7 @@ function calculateStats() {
 		arsort($playerWeeklyTotals);
 
 		foreach($playerWeeklyTotals as $playerID => $stats) {
-			$myTieBreaker = abs(getMondayCombinedScore($week) - getTieBreaker($playerID, $week));
+			$myTieBreaker = abs(getMondayCombinedScore($week, $year) - getTieBreaker($playerID, $week, $year));
 			//see if they're our current winner
 			if ($stats['score'] > $highestScore) {
 				$highestScore = $stats['score'];

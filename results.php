@@ -117,7 +117,7 @@ if (!$allScoresIn) {
 	echo '<p style="font-weight: bold; color: #DBA400;">* Not all scores have been updated for week ' . $week . ' yet.</p>' . "\n";
 }
 
-$hideMyPicks = hidePicks($user->userID, $week);
+$hideMyPicks = hidePicks($user->userID, $week, $year);
 if ($hideMyPicks && !$weekExpired) {
 	echo '<p style="font-weight: bold; color: green;">* Your picks are currently hidden to other users.</p>' . "\n";
 }
@@ -203,7 +203,7 @@ if (sizeof($playerTotals) > 0) {
 	$i = 0;
 	arsort($playerTotals);
 	foreach($playerTotals as $userID => $totalCorrect) {
-		$hidePicks = hidePicks($userID, $week);
+		$hidePicks = hidePicks($userID, $week, $year);
 		$tieBreaker = abs(getMondayCombinedScore($week, $year) - getTieBreaker($userID, $week, $year));
 
 		$survivor = getSurvivorPick($userID, $week, $year);

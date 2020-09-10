@@ -36,7 +36,7 @@ if (isset($weekStats)) {
 			}
 		}
 		$rowclass = (($i % 2 == 0) ? ' class="altrow"' : '');
-		echo '	<tr' . $rowclass . '><td><a href="/results.php?week=' . $week . '">' . $week . '</a></td><td>' . $winners . '</td><td>' . $stats[highestScore] . '/' . $stats[possibleScore] . '</td></tr>';
+		echo '	<tr' . $rowclass . '><td><a href="/results.php?week=' . $week . '&year='. $year .'">' . $week . '</a></td><td>' . $winners . '</td><td>' . $stats[highestScore] . '/' . $stats[possibleScore] . '</td></tr>';
 		$i++;
 	}
 } else {
@@ -200,7 +200,7 @@ if (isset($weekStats)) {
 					$playerRow = $playerPicks[$userID];
 					foreach($playerRow as $weekSurvivor) {
 						$gameIsLocked = gameIsLocked($weekSurvivor['gameID']);
-						$hidePicks = hidePicks($userID, $week);
+						$hidePicks = hidePicks($userID, $week, $year);
 						$pick = '<img src="images/logos/' . $weekSurvivor['survivor'] . '.svg" / title="'.$weekSurvivor['survivor'].'" height="28" width="42">';
 						if (!$gameIsLocked && !$weekExpired && $hidePicks && (int)$userID !== (int)$user->userID) {
 							$pick = '***';
