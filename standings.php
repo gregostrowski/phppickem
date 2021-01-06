@@ -182,9 +182,8 @@ if (isset($weekStats)) {
 					$tmpScore = 0;
 					$origStreak = 0;
 					$bestScore = 0;
-					$weeksPlayed = 0;
 					$alive = true;
-					$hideMyPicks = 1;
+					$weekNum = 1;
 					echo '	<tr>' . "\n";
 					switch (USER_NAMES_DISPLAY) {
 						case 1:
@@ -198,37 +197,44 @@ if (isset($weekStats)) {
 							break;
 					}
 					$playerRow = $playerPicks[$userID];
-					foreach($playerRow as $weekSurvivor) {
-						$gameIsLocked = gameIsLocked($weekSurvivor['gameID']);
-						$hidePicks = hidePicks($userID, $week, $year);
-						$pick = '<img src="images/logos/' . $weekSurvivor['survivor'] . '.svg" / title="'.$weekSurvivor['survivor'].'" height="28" width="42">';
-						if (!$gameIsLocked && !$weekExpired && $hidePicks && (int)$userID !== (int)$user->userID) {
-							$pick = '***';
-						}
-						if (!empty($games[$weekSurvivor['gameID']]['winnerID'])) {
-							//score has been entered
-							if ($games[$weekSurvivor['gameID']]['winnerID'] == $weekSurvivor['survivor']) {
-								$pick = '<span class="winner">' . $pick . '</span>';
-								if($alive) {
-									$origStreak++;
-								}
-								$tmpScore++;
-								if($tmpScore > $bestScore) {
-									$bestScore = $tmpScore;
-								}
-							} else {
-								$alive = false;
-								$tmpScore = 0;
+
+					while($weekNum <= $totalWeeks) {
+						$weekPick = $playerRow[$weekNum];
+						$weekToShow = (int)$weekPick['weekNum'];
+						$gameIsLocked = $weekPick['gameID'] === null ? true : gameIsLocked($weekPick['gameID']);
+						$hidePicks = hidePicks($userID, $weekNum, $year);
+						$survPick = $weekPick['survivor'];
+
+						// user didnt enter a pick for this week
+						if($weekToShow !== $weekNum) {
+							echo '  <td colspan="1"></td>';
+						} else {
+							$pick = '<img src="images/logos/' . $survPick . '.svg" / title="'. $survPick . '" height="28" width="42">';
+							if (!$gameIsLocked && !$weekExpired && $hidePicks && (int)$userID !== (int)$user->userID) {
+								$pick = '***';
 							}
+							if (!empty($games[$weekPick['gameID']]['winnerID'])) {
+								//score has been entered
+								if ($games[$weekPick['gameID']]['winnerID'] == $weekPick['survivor']) {
+									$pick = '<span class="winner">' . $pick . '</span>';
+									if($alive) {
+										$origStreak++;
+									}
+									$tmpScore++;
+									if($tmpScore > $bestScore) {
+										$bestScore = $tmpScore;
+									}
+								} else {
+									$alive = false;
+									$tmpScore = 0;
+								}
+							}
+							echo '	<td align="center">' . $pick . '</td>';
 						}
 
+						$weekNum++;
+					}
 
-						echo '	<td align="center">' . $pick . '</td>';
-						$weeksPlayed++;
-					}
-					if($weeksPlayed != $totalWeeks) {
-						echo '<td colspan="'.($totalWeeks - $weeksPlayed).'"></td>';
-					}
 					echo '<td>'.$origStreak.'</td>';
 					echo '<td>'.$bestScore.'</td>';
 					echo '</tr>';
